@@ -1,0 +1,15 @@
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Services.deps.json
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Services.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Services.pdb
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.AssemblyInfoInputs.cache
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.AssemblyInfo.cs
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.csproj.CoreCompileInputs.cache
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\refint\EmployeeDirectory.Services.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.pdb
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\ref\EmployeeDirectory.Services.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Concerns.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Concerns.pdb
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.csproj.AssemblyReference.cache
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.csproj.CopyComplete
