@@ -8,10 +8,12 @@ public class Program
 
     static void Main()
     {
-        var serviceProvider = new ServiceCollection().AddSingleton<IRoleService, RoleService>().AddSingleton<IEmployeeService, EmployeeService>().BuildServiceProvider();
-        IRoleService RoleService = serviceProvider.GetService<IRoleService>()!;
-        IEmployeeService EmployeeService = serviceProvider.GetService<IEmployeeService>()!;
-        EmployeeDirectory.UI.EmployeeDirectory employeeDirectory = new EmployeeDirectory.UI.EmployeeDirectory(EmployeeService, RoleService);
+        var serviceProvider = new ServiceCollection()
+        .AddSingleton<IJsonServices, JsonServices>()
+        .AddSingleton<IRoleService, RoleService>()
+        .AddSingleton<IEmployeeService, EmployeeService>()
+        .BuildServiceProvider();
+        new EmployeeDirectory.UI.EmployeeDirectory(serviceProvider.GetRequiredService<IEmployeeService>(), serviceProvider.GetRequiredService<IRoleService>()).Initialize();
     }
 
 }

@@ -1,11 +1,9 @@
 using EmployeeDirectory.Concerns;
-using EmployeeDirectory.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeDirectory.UI
 {
 
-    public class EmployeeDirectory
+    public class EmployeeDirectory : IEmployeeDirectory
     {
 
         public readonly IEmployeeService EmployeeService;
@@ -14,7 +12,6 @@ namespace EmployeeDirectory.UI
         {
             EmployeeService = employeeService;
             RoleService = roleService;
-            this.Initialize();
         }
         public void Initialize()
         {
@@ -67,7 +64,7 @@ namespace EmployeeDirectory.UI
                         break;
 
                     case EmployeeMenu.DisplayOne:
-                        this.DisplayOne();
+                        this.DisplayEmployee();
                         break;
 
                     case EmployeeMenu.Back:
@@ -261,7 +258,7 @@ namespace EmployeeDirectory.UI
             return id;
         }
 
-        public void DisplayOne()
+        public void DisplayEmployee()
         {
             var Employees = EmployeeService.GetAll();
             if (Employees.Count > 0)
