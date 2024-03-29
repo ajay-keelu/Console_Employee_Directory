@@ -13,7 +13,9 @@ public class Program
         .AddSingleton<IRoleService, RoleService>()
         .AddSingleton<IEmployeeService, EmployeeService>()
         .BuildServiceProvider();
-        new EmployeeDirectory.UI.EmployeeDirectory(serviceProvider.GetRequiredService<IEmployeeService>(), serviceProvider.GetRequiredService<IRoleService>()).Initialize();
+        IEmployeeService employeeService = serviceProvider.GetRequiredService<IEmployeeService>();
+        IRoleService roleService = serviceProvider.GetRequiredService<IRoleService>();
+        new EmployeeDirectory.UI.EmployeeDirectory(employeeService, roleService).Initialize();
     }
 
 }

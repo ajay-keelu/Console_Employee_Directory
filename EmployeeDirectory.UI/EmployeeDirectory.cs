@@ -3,7 +3,7 @@ using EmployeeDirectory.Concerns;
 namespace EmployeeDirectory.UI
 {
 
-    public class EmployeeDirectory : IEmployeeDirectory
+    public class EmployeeDirectory
     {
 
         public readonly IEmployeeService EmployeeService;
