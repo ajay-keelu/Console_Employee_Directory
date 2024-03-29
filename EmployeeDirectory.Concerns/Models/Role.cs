@@ -19,7 +19,7 @@ namespace EmployeeDirectory.Concerns
 
         public Role()
         {
-            AssignedEmployees = new List<string>();
+            this.AssignedEmployees = new List<string>();
             this.IsActive = true;
         }
     }

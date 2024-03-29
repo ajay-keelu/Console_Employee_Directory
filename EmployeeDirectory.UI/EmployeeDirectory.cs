@@ -7,12 +7,15 @@ namespace EmployeeDirectory.UI
     {
 
         public readonly IEmployeeService EmployeeService;
+
         public readonly IRoleService RoleService;
+
         public EmployeeDirectory(IEmployeeService employeeService, IRoleService roleService)
         {
             EmployeeService = employeeService;
             RoleService = roleService;
         }
+
         public void Initialize()
         {
 
@@ -72,13 +75,13 @@ namespace EmployeeDirectory.UI
                         break;
                 }
 
-                this.EmployeeInitalize();
             }
             catch (Exception)
             {
                 Console.WriteLine("Enter options from above");
-                this.EmployeeInitalize();
             }
+
+            this.EmployeeInitalize();
         }
 
         public void RoleInitialize()
@@ -104,7 +107,7 @@ namespace EmployeeDirectory.UI
                         break;
 
                     case RoleMenu.Display:
-                        this.ViewRoles();
+                        this.DisplayRoles();
                         break;
 
                     case RoleMenu.Back:
@@ -115,8 +118,8 @@ namespace EmployeeDirectory.UI
             catch (Exception)
             {
                 Console.WriteLine("Enter options from above");
-                this.RoleInitialize();
             }
+
             this.RoleInitialize();
         }
 
@@ -140,7 +143,7 @@ namespace EmployeeDirectory.UI
                     Project = Utility.GetInputString("Project ", false, null),
                 };
 
-                if (EmployeeService.Save(employee))
+                if (this.EmployeeService.Save(employee))
                     Console.WriteLine("Employee created successfully. \n");
                 else
                     Console.WriteLine("Error in creation of employee.");
@@ -155,7 +158,7 @@ namespace EmployeeDirectory.UI
         {
             try
             {
-                var Employees = EmployeeService.GetAll();
+                var Employees = this.EmployeeService.GetAll();
 
                 if (Employees.Count > 0)
                 {
@@ -163,7 +166,7 @@ namespace EmployeeDirectory.UI
                     Console.WriteLine("Enter employee id ");
                     string? id = Console.ReadLine();
 
-                    Employee? employee = EmployeeService.GetById(id ?? "");
+                    Employee? employee = this.EmployeeService.GetById(id ?? "");
 
                     if (employee == null)
                         throw new Exception();
@@ -233,6 +236,7 @@ namespace EmployeeDirectory.UI
 
             EmployeeService.Update(employee);
             Console.WriteLine("\nUpdated successfully.");
+
             this.EmployeeInitalize();
         }
 
@@ -246,10 +250,11 @@ namespace EmployeeDirectory.UI
             {
                 Console.WriteLine("{0}", role);
             }
+
             Console.WriteLine("Enter role id");
             string? id = Console.ReadLine();
 
-            if (RoleService.GetById(id ?? "") == null)
+            if (this.RoleService.GetById(id ?? "") == null)
             {
                 Console.WriteLine("Please enter valid role id.");
                 id = this.AssignRoleToEmployee();
@@ -260,7 +265,7 @@ namespace EmployeeDirectory.UI
 
         public void DisplayEmployee()
         {
-            var Employees = EmployeeService.GetAll();
+            var Employees = this.EmployeeService.GetAll();
             if (Employees.Count > 0)
             {
                 try
@@ -273,6 +278,7 @@ namespace EmployeeDirectory.UI
 
                     if (employee == null)
                         throw new Exception();
+
                     this.DisplayEmployees(new List<Employee> { employee });
                 }
                 catch (Exception)
@@ -289,18 +295,18 @@ namespace EmployeeDirectory.UI
         public void DeleteEmployee()
         {
             var Employees = EmployeeService.GetAll();
+
             if (Employees.Count > 0)
             {
                 this.DisplayEmployees();
                 Console.WriteLine("Enter employee id");
                 string? id = Console.ReadLine();
 
-                Employee? employee = EmployeeService.GetById(id ?? "");
+                Employee employee = EmployeeService.GetById(id ?? "");
 
                 if (employee != null)
                 {
-                    bool status = EmployeeService.DeleteByID(employee.Id);
-                    if (status)
+                    if (EmployeeService.DeleteByID(employee.Id))
                         Console.WriteLine("Employee deleted successfully.");
                     else
                         Console.WriteLine("Please try again!.");
@@ -319,7 +325,7 @@ namespace EmployeeDirectory.UI
 
         public void DisplayEmployees()
         {
-            var Employees = EmployeeService.GetAll();
+            var Employees = this.EmployeeService.GetAll();
             if (Employees.Count == 0)
                 ConsoleUtility.PrintNoData();
             else
@@ -327,7 +333,7 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in Employees)
             {
-                ConsoleUtility.PrintEmployeeRow(employee, RoleService.GetById(employee.JobTitle).Name);
+                ConsoleUtility.PrintEmployeeRow(employee, this.RoleService.GetById(employee.JobTitle).Name);
                 ConsoleUtility.PrintLine();
             }
         }
@@ -341,7 +347,7 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in employees)
             {
-                Role? role = RoleService.GetById(employee.JobTitle);
+                Role? role = this.RoleService.GetById(employee.JobTitle);
                 ConsoleUtility.PrintEmployeeRow(employee, role.Name);
                 ConsoleUtility.PrintLine();
             }
@@ -357,7 +363,7 @@ namespace EmployeeDirectory.UI
                 Description = Utility.GetInputString("Description ", true, null),
             };
 
-            if (RoleService.Save(role))
+            if (this.RoleService.Save(role))
                 Console.WriteLine("Role created successfully.");
             else
                 Console.WriteLine("Please try again!");
@@ -365,7 +371,7 @@ namespace EmployeeDirectory.UI
 
         public void EditRole()
         {
-            if (RoleService.GetAll().Count == 0)
+            if (this.RoleService.GetAll().Count == 0)
             {
                 ConsoleUtility.PrintNoData();
             }
@@ -373,14 +379,14 @@ namespace EmployeeDirectory.UI
             {
                 try
                 {
-                    List<string> roles = RoleService.GetRoleName();
+                    List<string> roles = this.RoleService.GetRoleName();
 
                     foreach (var rolename in roles)
                         Console.WriteLine("{0}", rolename);
                     Console.WriteLine("Enter role id ");
 
                     string? id = Console.ReadLine();
-                    Role? role = RoleService.GetById(id ?? "");
+                    Role? role = this.RoleService.GetById(id ?? "");
 
                     Console.WriteLine(Menus.EditRoleMenu);
                     int option;
@@ -425,18 +431,18 @@ namespace EmployeeDirectory.UI
                         break;
                 }
                 if (!RoleService.Update(role)) return false;
-                return true;
             }
             catch (Exception)
             {
                 return false;
             }
+            return true;
         }
 
         public void DeleteRole()
         {
 
-            List<string> roles = RoleService.GetRoleName();
+            List<string> roles = this.RoleService.GetRoleName();
 
             if (roles.Count == 0)
             {
@@ -451,17 +457,17 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine("Enter role id");
                 string? id = Console.ReadLine();
 
-                Role? role = RoleService.GetById(id ?? "");
+                Role? role = this.RoleService.GetById(id ?? "");
 
                 if (role != null)
                 {
-                    if (EmployeeService.GetAssignedEmployee(role.Id).Count > 0)
+                    if (this.EmployeeService.GetAssignedEmployee(role.Id).Count > 0)
                     {
                         Console.WriteLine("{0} role contains employees. Please assign employees to another role and then try to delete the role.", role.Name);
                     }
                     else
                     {
-                        if (RoleService.DeleteById(id ?? ""))
+                        if (this.RoleService.DeleteById(id ?? ""))
                             Console.WriteLine("Role deleted successfully");
                         else
                             Console.WriteLine("Please try again!");
@@ -474,9 +480,9 @@ namespace EmployeeDirectory.UI
             }
         }
 
-        public void ViewRoles()
+        public void DisplayRoles()
         {
-            var roles = RoleService.GetAll();
+            var roles = this.RoleService.GetAll();
             if (roles.Count == 0)
             {
                 ConsoleUtility.PrintNoData();
@@ -492,7 +498,7 @@ namespace EmployeeDirectory.UI
             {
                 ConsoleUtility.PrintRoleHeader();
                 ConsoleUtility.PrintRoleRow(role);
-                this.DisplayEmployees(EmployeeService.GetAssignedEmployee(role.Id));
+                this.DisplayEmployees(this.EmployeeService.GetAssignedEmployee(role.Id));
                 Console.WriteLine("===========================================================================================================================================================================");
             }
         }

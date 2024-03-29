@@ -9,7 +9,7 @@ namespace EmployeeDirectory.Services
 
         public RoleService(IJsonServices IJsonServices)
         {
-            _IJsonServices = IJsonServices;
+            this._IJsonServices = IJsonServices;
         }
 
         public Role? GetById(string id)
@@ -31,7 +31,7 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            return (from role in _IJsonServices.GetRoles() where role.IsActive select role).ToList();
+            return (from role in this._IJsonServices.GetRoles() where role.IsActive select role).ToList();
         }
 
         public bool DeleteById(string Id)
@@ -46,7 +46,7 @@ namespace EmployeeDirectory.Services
 
                     Roles.Add(role);
                 }
-                if (!_IJsonServices.UpdateRoles(Roles)) throw new Exception();
+                if (!this._IJsonServices.UpdateRoles(Roles)) throw new Exception();
 
             }
             catch (Exception)
@@ -73,9 +73,11 @@ namespace EmployeeDirectory.Services
             try
             {
                 role.Id = this.GenerateId();
-                var Roles = _IJsonServices.GetRoles();
+                var Roles = this._IJsonServices.GetRoles();
                 Roles.Add(role);
-                if (!_IJsonServices.UpdateRoles(Roles)) throw new Exception();
+
+                if (!this._IJsonServices.UpdateRoles(Roles))
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -88,10 +90,12 @@ namespace EmployeeDirectory.Services
         {
             try
             {
-                var Roles = _IJsonServices.GetRoles();
+                var Roles = this._IJsonServices.GetRoles();
                 int index = Roles.FindIndex(r => r.Id == role.Id);
                 Roles[index] = role;
-                if (!_IJsonServices.UpdateRoles(Roles)) throw new Exception();
+
+                if (!this._IJsonServices.UpdateRoles(Roles))
+                    throw new Exception();
             }
             catch (Exception)
             {

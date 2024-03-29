@@ -9,8 +9,9 @@ namespace EmployeeDirectory.Services
 
         public EmployeeService(IJsonServices IJsonServices)
         {
-            _IJsonServices = IJsonServices;
+            this._IJsonServices = IJsonServices;
         }
+
         public Employee? GetById(string id)
         {
             try
@@ -30,7 +31,7 @@ namespace EmployeeDirectory.Services
 
         public List<Employee> GetAll()
         {
-            return (from employee in _IJsonServices.GetEmployees() where employee.IsActive select employee).ToList();
+            return (from employee in this._IJsonServices.GetEmployees() where employee.IsActive select employee).ToList();
         }
 
         public bool Create(Employee employee)
@@ -42,7 +43,7 @@ namespace EmployeeDirectory.Services
                 var Employees = this.GetAll();
                 Employees.Add(employee);
 
-                if (!_IJsonServices.UpdateEmployees(Employees))
+                if (!this._IJsonServices.UpdateEmployees(Employees))
                     throw new Exception();
 
                 return true;
@@ -61,7 +62,7 @@ namespace EmployeeDirectory.Services
                 int index = Employees.FindIndex(emp => emp.Id == employee.Id);
                 Employees[index] = employee;
 
-                if (!_IJsonServices.UpdateEmployees(Employees))
+                if (!this._IJsonServices.UpdateEmployees(Employees))
                     throw new Exception();
 
                 return true;
@@ -87,7 +88,7 @@ namespace EmployeeDirectory.Services
                     Employees.Add(emp);
                 }
 
-                if (!_IJsonServices.UpdateEmployees(Employees))
+                if (!this._IJsonServices.UpdateEmployees(Employees))
                     throw new Exception();
                 return true;
             }

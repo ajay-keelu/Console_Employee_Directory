@@ -11,17 +11,16 @@ namespace EmployeeDirectory.Services
         public List<Employee> GetEmployees()
         {
 
-            return JsonSerializer.Deserialize<JsonData>(File.ReadAllText(db))?.Employees;
+            return JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db))?.Employees;
         }
 
         public bool UpdateEmployees(List<Employee> Employees)
         {
             try
             {
-                JsonData jsonData = JsonSerializer.Deserialize<JsonData>(File.ReadAllText(db));
+                JsonData jsonData = JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db));
                 jsonData.Employees = Employees;
-                string jsonString = JsonSerializer.Serialize(jsonData);
-                File.WriteAllText(db, jsonString);
+                File.WriteAllText(this.db, JsonSerializer.Serialize(jsonData));
                 return true;
             }
             catch (Exception)
@@ -31,17 +30,16 @@ namespace EmployeeDirectory.Services
         }
         public List<Role> GetRoles()
         {
-            return JsonSerializer.Deserialize<JsonData>(File.ReadAllText(db))?.Roles;
+            return JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db))?.Roles;
         }
 
         public bool UpdateRoles(List<Role> Roles)
         {
             try
             {
-                JsonData JsonData = JsonSerializer.Deserialize<JsonData>(File.ReadAllText(db));
+                JsonData JsonData = JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db));
                 JsonData.Roles = Roles;
-                string jsonString = JsonSerializer.Serialize(JsonData);
-                File.WriteAllText(db, jsonString);
+                File.WriteAllText(db, JsonSerializer.Serialize(JsonData));
                 return true;
             }
             catch (Exception)
