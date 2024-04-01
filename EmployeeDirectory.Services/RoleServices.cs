@@ -1,3 +1,4 @@
+using System.Text.Json;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.Contracts;
 namespace EmployeeDirectory.Services
@@ -33,6 +34,23 @@ namespace EmployeeDirectory.Services
         public List<Role> GetAll()
         {
             return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList();
+        }
+
+        public List<string> GetProperty()
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                string path = @"Json/selectData.json";
+                SelectData selectData = JsonSerializer.Deserialize<SelectData>(File.ReadAllText(path));
+                list = selectData.JobTitles;
+
+            }
+            catch (System.Exception)
+            {
+                list = this.GetProperty();
+            }
+            return list;
         }
 
         public bool DeleteById(string Id)

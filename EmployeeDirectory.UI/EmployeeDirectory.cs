@@ -377,7 +377,7 @@ namespace EmployeeDirectory.UI
         {
             Role role = new Role()
             {
-                Name = Utility.GetInputString("Role name", true, null),
+                Name = this.GetRole(),
                 Department = Utility.GetInputString("Department ", true, null),
                 Location = Utility.GetInputString("Location", true, null),
                 Description = Utility.GetInputString("Description ", true, null),
@@ -387,6 +387,25 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine("Role created successfully.");
             else
                 Console.WriteLine("Please try again!");
+        }
+
+        public string GetRole()
+        {
+            string res = "";
+            try
+            {
+                int option;
+                var roles = RoleService.GetProperty();
+                Console.WriteLine("Select Role :");
+                ConsoleUtility.Print(roles);
+                Utility.GetOption(out option, roles.Count);
+                res = roles.ElementAt(option - 1);
+            }
+            catch (System.Exception)
+            {
+                res = this.GetRole();
+            }
+            return res;
         }
 
         public void EditRole()
@@ -432,7 +451,7 @@ namespace EmployeeDirectory.UI
                 switch ((EditRoleMenu)option)
                 {
                     case EditRoleMenu.Name:
-                        role.Name = Utility.GetInputString("Role name", true, null);
+                        role.Name = this.GetRole();
                         break;
 
                     case EditRoleMenu.Department:
