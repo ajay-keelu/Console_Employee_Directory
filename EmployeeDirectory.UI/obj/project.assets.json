@@ -47,12 +47,22 @@
           "bin/placeholder/EmployeeDirectory.Concerns.dll": {}
         }
       },
-      "EmployeeDirectory.Database/1.0.0": {
+      "EmployeeDirectory.Contracts/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "EmployeeDirectory.Concerns": "1.0.0"
         },
+        "compile": {
+          "bin/placeholder/EmployeeDirectory.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EmployeeDirectory.Contracts.dll": {}
+        }
+      },
+      "EmployeeDirectory.Database/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
         "compile": {
           "bin/placeholder/EmployeeDirectory.Database.dll": {}
         },
@@ -64,7 +74,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "EmployeeDirectory.Concerns": "1.0.0"
+          "EmployeeDirectory.Concerns": "1.0.0",
+          "EmployeeDirectory.Contracts": "1.0.0"
         },
         "compile": {
           "bin/placeholder/EmployeeDirectory.Services.dll": {}
@@ -145,6 +156,11 @@
       "path": "../EmployeeDirectory.Concerns/EmployeeDirectory.Concerns.csproj",
       "msbuildProject": "../EmployeeDirectory.Concerns/EmployeeDirectory.Concerns.csproj"
     },
+    "EmployeeDirectory.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../EmployeeDirectory.Contracts/EmployeeDirectory.Contracts.csproj",
+      "msbuildProject": "../EmployeeDirectory.Contracts/EmployeeDirectory.Contracts.csproj"
+    },
     "EmployeeDirectory.Database/1.0.0": {
       "type": "project",
       "path": "../EmployeeDirectory.Database/EmployeeDirectory.Database.csproj",
@@ -158,7 +174,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "EmployeeDirectory.Concerns >= 1.0.0",
+      "EmployeeDirectory.Contracts >= 1.0.0",
       "EmployeeDirectory.Database >= 1.0.0",
       "EmployeeDirectory.Services >= 1.0.0",
       "Microsoft.Extensions.DependencyInjection >= 8.0.0"
@@ -189,8 +205,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj": {
-              "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj"
+            "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
+              "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj"
             },
             "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Database\\EmployeeDirectory.Database.csproj": {
               "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Database\\EmployeeDirectory.Database.csproj"

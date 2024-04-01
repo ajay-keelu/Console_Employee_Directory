@@ -1,6 +1,5 @@
 namespace EmployeeDirectory.Concerns
 {
-
     public enum MainMenu
     {
         Employee = 1,
@@ -8,7 +7,7 @@ namespace EmployeeDirectory.Concerns
         Exit = 3
     }
 
-    public enum Status
+    public enum EmployeeStatus
     {
         Active = 1,
         inActive = 2
@@ -17,43 +16,43 @@ namespace EmployeeDirectory.Concerns
     public enum EmployeeMenu
     {
         Add = 1,
-        Edit = 2,
-        Delete = 3,
-        DisplayAll = 4,
-        DisplayOne = 5,
-        Back = 6
+        Edit,
+        Delete,
+        DisplayAll,
+        DisplayOne,
+        Back
     }
 
     public enum EditEmployeeMenu
     {
         Name = 1,
-        Location = 2,
-        Department = 3,
-        JoiningDate = 4,
-        Jobtitle = 5,
-        DateOfBirth = 6,
-        Email = 7,
-        Manager = 8,
-        Project = 9,
-        Back = 10
+        Location,
+        Department,
+        JoiningDate,
+        Jobtitle,
+        DateOfBirth,
+        Email,
+        Manager,
+        Project,
+        Back
     }
 
     public enum RoleMenu
     {
         Add = 1,
-        Edit = 2,
-        Delete = 3,
-        Display = 4,
-        Back = 5
+        Edit,
+        Delete,
+        Display,
+        Back
     }
 
     public enum EditRoleMenu
     {
         Name = 1,
-        Department = 2,
-        Location = 3,
-        Description = 4,
-        Back = 5
+        Department,
+        Location,
+        Description,
+        Back
     }
 
 }

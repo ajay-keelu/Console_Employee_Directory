@@ -1,5 +1,6 @@
 using System.Text.Json;
 using EmployeeDirectory.Concerns;
+using EmployeeDirectory.Contracts;
 
 namespace EmployeeDirectory.Services
 {
@@ -8,38 +9,43 @@ namespace EmployeeDirectory.Services
     {
         public readonly string db = @"../EmployeeDirectory.Database/db.json";
 
-        public List<Employee> GetEmployees()
+        public List<T> GetAll<T>()
         {
+            List<T> list = new List<T>();
+            try
+            {
+                Database jsonData = JsonSerializer.Deserialize<Database>(File.ReadAllText(this.db));
 
-            return JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db))?.Employees;
+                if (typeof(T) == typeof(Employee))
+                {
+                    list = jsonData.Employees.Cast<T>().ToList();
+                }
+                else
+                {
+                    list = jsonData.Roles.Cast<T>().ToList();
+                }
+            }
+            catch (System.Exception)
+            {
+                list = this.GetAll<T>();
+            }
+            return list;
         }
 
-        public bool UpdateEmployees(List<Employee> Employees)
+        public bool Save<T>(List<T> list)
         {
             try
             {
-                JsonData jsonData = JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db));
-                jsonData.Employees = Employees;
-                File.WriteAllText(this.db, JsonSerializer.Serialize(jsonData));
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        public List<Role> GetRoles()
-        {
-            return JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db))?.Roles;
-        }
-
-        public bool UpdateRoles(List<Role> Roles)
-        {
-            try
-            {
-                JsonData JsonData = JsonSerializer.Deserialize<JsonData>(File.ReadAllText(this.db));
-                JsonData.Roles = Roles;
-                File.WriteAllText(db, JsonSerializer.Serialize(JsonData));
+                Database jsonData = JsonSerializer.Deserialize<Database>(File.ReadAllText(this.db));
+                if (typeof(T) == typeof(Employee))
+                {
+                    jsonData.Employees = list.Cast<Employee>().ToList();
+                }
+                else
+                {
+                    jsonData.Roles = list.Cast<Role>().ToList();
+                }
+                File.WriteAllText(db, JsonSerializer.Serialize(jsonData));
                 return true;
             }
             catch (Exception)

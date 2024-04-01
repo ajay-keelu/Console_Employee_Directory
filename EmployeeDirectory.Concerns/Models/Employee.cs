@@ -1,30 +1,28 @@
 namespace EmployeeDirectory.Concerns
 {
-
-
     public class Employee
     {
         public string? Id { get; set; }
 
         public string? Name { get; set; }
 
-        public string? Location { get; set; }
-
-        public DateTime? DateOfBirth { get; set; }
-
         public string? Email { get; set; }
 
         public string? MobileNumber { get; set; }
 
-        public string? JobTitle { get; set; }
+        public string? Location { get; set; } // maintain masterdata
 
-        public string? Department { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+
+        public string? JobTitle { get; set; } // maintain masterdata
+
+        public string? Department { get; set; } // maintain masterdata
 
         public string? Manager { get; set; }
 
         public string? Project { get; set; }
 
-        public Status Status { get; set; }
+        public EmployeeStatus Status { get; set; }
 
         public DateTime? JoiningDate { get; set; }
 
@@ -33,7 +31,7 @@ namespace EmployeeDirectory.Concerns
         public Employee()
         {
             this.IsActive = true;
-            this.Status = Status.Active;
+            this.Status = EmployeeStatus.Active;
         }
 
     }

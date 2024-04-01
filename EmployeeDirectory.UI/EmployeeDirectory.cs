@@ -1,11 +1,12 @@
+using EmployeeDirectory.Contracts;
 using EmployeeDirectory.Concerns;
+using EmployeeDirectory.Services;
 
 namespace EmployeeDirectory.UI
 {
 
     public class EmployeeDirectory
     {
-
         public readonly IEmployeeService EmployeeService;
 
         public readonly IRoleService RoleService;
@@ -132,13 +133,13 @@ namespace EmployeeDirectory.UI
                 Employee employee = new Employee()
                 {
                     Name = Utility.GetInputString("Fullname", true, RegularExpression.NamePattern),
-                    DateOfBirth = Utility.GetInputDate("Date of birth", false),
                     Email = Utility.GetInputEmail(),
                     MobileNumber = Utility.GetMobileNumber(),
-                    JoiningDate = Utility.GetInputDate("Joining date", true),
-                    Location = Utility.GetInputString("Location", true, null),
                     JobTitle = this.AssignRoleToEmployee(),
-                    Department = Utility.GetInputString("Department", true, null),
+                    JoiningDate = Utility.GetInputDate("Joining date", true),
+                    Location = this.PropertyAssign("location"),
+                    Department = this.PropertyAssign("department"),
+                    DateOfBirth = Utility.GetInputDate("Date of birth", false),
                     Manager = Utility.GetInputString("Manager ", false, null),
                     Project = Utility.GetInputString("Project ", false, null),
                 };
@@ -189,6 +190,25 @@ namespace EmployeeDirectory.UI
             }
         }
 
+        public string PropertyAssign(string prop)
+        {
+            string res = "";
+            try
+            {
+                Console.WriteLine("Select {0} :", prop);
+                List<string> list = this.EmployeeService.GetProperty(prop);
+                ConsoleUtility.Print(list);
+                int option;
+                Utility.GetOption(out option, list.Count);
+                res = list.ElementAt(option - 1);
+            }
+            catch (System.Exception)
+            {
+                res = this.PropertyAssign(prop);
+            }
+            return res;
+        }
+
         public void UpdateEmployee(int option, Employee employee)
         {
             switch ((EditEmployeeMenu)option)
@@ -198,11 +218,11 @@ namespace EmployeeDirectory.UI
                     break;
 
                 case EditEmployeeMenu.Location:
-                    employee.Location = Utility.GetInputString("Location", true, null);
+                    employee.Location = this.PropertyAssign("location");
                     break;
 
                 case EditEmployeeMenu.Department:
-                    employee.Department = Utility.GetInputString("Department", true, null);
+                    employee.Department = this.PropertyAssign("department");
                     break;
 
                 case EditEmployeeMenu.JoiningDate:
@@ -234,7 +254,7 @@ namespace EmployeeDirectory.UI
                     break;
             }
 
-            EmployeeService.Update(employee);
+            EmployeeService.Save(employee);
             Console.WriteLine("\nUpdated successfully.");
 
             this.EmployeeInitalize();
@@ -430,7 +450,7 @@ namespace EmployeeDirectory.UI
                         this.RoleInitialize();
                         break;
                 }
-                if (!RoleService.Update(role)) return false;
+                if (!RoleService.Save(role)) return false;
             }
             catch (Exception)
             {
@@ -461,7 +481,7 @@ namespace EmployeeDirectory.UI
 
                 if (role != null)
                 {
-                    if (this.EmployeeService.GetAssignedEmployee(role.Id).Count > 0)
+                    if (this.EmployeeService.GetAssignedEmployees(role.Id).Count > 0)
                     {
                         Console.WriteLine("{0} role contains employees. Please assign employees to another role and then try to delete the role.", role.Name);
                     }
@@ -498,7 +518,7 @@ namespace EmployeeDirectory.UI
             {
                 ConsoleUtility.PrintRoleHeader();
                 ConsoleUtility.PrintRoleRow(role);
-                this.DisplayEmployees(this.EmployeeService.GetAssignedEmployee(role.Id));
+                this.DisplayEmployees(this.EmployeeService.GetAssignedEmployees(role.Id));
                 Console.WriteLine("===========================================================================================================================================================================");
             }
         }

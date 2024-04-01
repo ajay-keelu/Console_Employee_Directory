@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeDirectory.Concerns\EmployeeDirectory.Concerns.csproj" />
+    <ProjectReference Include="..\EmployeeDirectory.Contracts\EmployeeDirectory.Contracts.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

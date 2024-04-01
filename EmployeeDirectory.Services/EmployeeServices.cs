@@ -1,18 +1,20 @@
+using System.Text.Json;
 using EmployeeDirectory.Concerns;
+using EmployeeDirectory.Contracts;
 
 namespace EmployeeDirectory.Services
 {
 
     public class EmployeeService : IEmployeeService
     {
-        private readonly IJsonServices _IJsonServices;
+        private readonly IJsonServices _jsonServices;
 
-        public EmployeeService(IJsonServices IJsonServices)
+        public EmployeeService(IJsonServices jsonServices)
         {
-            this._IJsonServices = IJsonServices;
+            this._jsonServices = jsonServices;
         }
 
-        public Employee? GetById(string id)
+        public Employee GetById(string id)
         {
             try
             {
@@ -24,72 +26,32 @@ namespace EmployeeDirectory.Services
             }
         }
 
-        public List<Employee> GetAssignedEmployee(string Id)
+        public List<Employee> GetAssignedEmployees(string Id)
         {
-            return (from employee in this.GetAll() where employee.JobTitle == Id select employee).ToList();
+            try
+            {
+                return (from employee in this.GetAll() where employee.JobTitle == Id select employee).ToList();
+            }
+            catch (Exception)
+            {
+                return new List<Employee>();
+            }
         }
 
         public List<Employee> GetAll()
         {
-            return (from employee in this._IJsonServices.GetEmployees() where employee.IsActive select employee).ToList();
+            return (from employee in this._jsonServices.GetAll<Employee>() where employee.IsActive select employee).ToList();
         }
 
-        public bool Create(Employee employee)
+        public bool DeleteByID(string id)
         {
             try
             {
-                employee.Id = this.GenerateId();
-
-                var Employees = this.GetAll();
-                Employees.Add(employee);
-
-                if (!this._IJsonServices.UpdateEmployees(Employees))
+                var employees = this.GetAll();
+                employees = employees.FindAll(emp => emp.Id != id);
+                if (!this._jsonServices.Save<Employee>(employees))
                     throw new Exception();
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public bool Update(Employee employee)
-        {
-            try
-            {
-                var Employees = this.GetAll();
-                int index = Employees.FindIndex(emp => emp.Id == employee.Id);
-                Employees[index] = employee;
-
-                if (!this._IJsonServices.UpdateEmployees(Employees))
-                    throw new Exception();
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public bool DeleteByID(string Id)
-        {
-            try
-            {
-                Employee? employee = this.GetById(Id);
-                if (employee == null)
-                    throw new Exception();
-                var Employees = new List<Employee>();
-                foreach (Employee emp in this.GetAll())
-                {
-                    if (emp.Id == Id) emp.IsActive = false;
-
-                    Employees.Add(emp);
-                }
-
-                if (!this._IJsonServices.UpdateEmployees(Employees))
-                    throw new Exception();
                 return true;
             }
             catch (Exception)
@@ -106,12 +68,72 @@ namespace EmployeeDirectory.Services
                 return this.Update(employee);
         }
 
-        public string GenerateId()
+        private bool Create(Employee employee)
+        {
+            try
+            {
+                employee.Id = this.GenerateId();
+
+                var employees = this.GetAll();
+                employees.Add(employee);
+
+                if (!this._jsonServices.Save<Employee>(employees))
+                    throw new Exception();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public List<string> GetProperty(string prop)
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                string path = @"Json/selectData.json";
+                SelectData selectData = JsonSerializer.Deserialize<SelectData>(File.ReadAllText(path));
+                if (prop == "location")
+                    list = selectData.Locations;
+                else if (prop == "department")
+                    list = selectData.Departments;
+                else
+                    list = selectData.JobTitles;
+
+            }
+            catch (System.Exception)
+            {
+                list = this.GetProperty(prop);
+            }
+            return list;
+        }
+
+        public bool Update(Employee employee)
+        {
+            try
+            {
+                var employees = this.GetAll();
+                int index = employees.FindIndex(emp => emp.Id == employee.Id);
+                employees[index] = employee;
+
+                if (!this._jsonServices.Save<Employee>(employees))
+                    throw new Exception();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private string GenerateId()
         {
             DateTime CurrentDate = DateTime.Now;
             return "TZ" + CurrentDate.Year + CurrentDate.Month + CurrentDate.Day + CurrentDate.Hour + CurrentDate.Minute + CurrentDate.Second;
         }
-
     }
 
 }

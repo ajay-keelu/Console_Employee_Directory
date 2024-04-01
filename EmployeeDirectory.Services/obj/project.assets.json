@@ -11,6 +11,19 @@
         "runtime": {
           "bin/placeholder/EmployeeDirectory.Concerns.dll": {}
         }
+      },
+      "EmployeeDirectory.Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "EmployeeDirectory.Concerns": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/EmployeeDirectory.Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EmployeeDirectory.Contracts.dll": {}
+        }
       }
     }
   },
@@ -19,11 +32,17 @@
       "type": "project",
       "path": "../EmployeeDirectory.Concerns/EmployeeDirectory.Concerns.csproj",
       "msbuildProject": "../EmployeeDirectory.Concerns/EmployeeDirectory.Concerns.csproj"
+    },
+    "EmployeeDirectory.Contracts/1.0.0": {
+      "type": "project",
+      "path": "../EmployeeDirectory.Contracts/EmployeeDirectory.Contracts.csproj",
+      "msbuildProject": "../EmployeeDirectory.Contracts/EmployeeDirectory.Contracts.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "EmployeeDirectory.Concerns >= 1.0.0"
+      "EmployeeDirectory.Concerns >= 1.0.0",
+      "EmployeeDirectory.Contracts >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -53,6 +72,9 @@
           "projectReferences": {
             "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj": {
               "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj"
+            },
+            "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
+              "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj"
             }
           }
         }

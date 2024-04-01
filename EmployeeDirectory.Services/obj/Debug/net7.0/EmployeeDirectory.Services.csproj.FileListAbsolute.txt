@@ -13,3 +13,5 @@ C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\Employ
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Concerns.pdb
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.csproj.AssemblyReference.cache
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\obj\Debug\net7.0\EmployeeDirectory.Services.csproj.CopyComplete
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Contracts.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Services\bin\Debug\net7.0\EmployeeDirectory.Contracts.pdb

@@ -5,10 +5,6 @@ C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\Employ
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\bin\Debug\net7.0\EmployeeDirectory.Database.deps.json
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\bin\Debug\net7.0\EmployeeDirectory.Database.dll
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\bin\Debug\net7.0\EmployeeDirectory.Database.pdb
-C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\bin\Debug\net7.0\EmployeeDirectory.Concerns.dll
-C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\bin\Debug\net7.0\EmployeeDirectory.Concerns.pdb
-C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\obj\Debug\net7.0\EmployeeDirectory.Database.csproj.AssemblyReference.cache
-C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\obj\Debug\net7.0\EmployeeDirectory.Database.csproj.CopyComplete
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\obj\Debug\net7.0\EmployeeDirectory.Database.dll
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\obj\Debug\net7.0\refint\EmployeeDirectory.Database.dll
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.Database\obj\Debug\net7.0\EmployeeDirectory.Database.pdb

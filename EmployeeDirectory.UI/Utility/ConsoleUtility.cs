@@ -60,6 +60,11 @@ namespace EmployeeDirectory.UI
             return property.Length > width - 2 ? property.Substring(0, width - 5) + "..." : property.PadRight(width - 2);
         }
 
+        public static void Print(List<string> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+                Console.WriteLine("{0}. {1}", i + 1, list.ElementAt(i));
+        }
         public static void PrintRoleRow(Role role)
         {
             string name = GetPropertyWithWidth(role.Name is null or "" ? "No Data" : role.Name, 32);

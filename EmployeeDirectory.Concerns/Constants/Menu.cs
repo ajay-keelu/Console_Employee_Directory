@@ -1,4 +1,4 @@
-namespace EmployeeDirectory.UI
+namespace EmployeeDirectory.Concerns
 {
     public class Menus
     {

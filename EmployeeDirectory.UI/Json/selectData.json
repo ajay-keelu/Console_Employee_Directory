@@ -1,0 +1,14 @@
+{
+  "Locations": ["Hyderabad", "Chennai", "Banglore", "Delhi", "Visakhapatnam"],
+  "Departments": [
+    "Product Engineering",
+    "Human Resource Management",
+    "Quality Analysis"
+  ],
+  "JobTitles": [
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "Tester"
+  ]
+}

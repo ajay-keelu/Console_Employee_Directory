@@ -3,16 +3,31 @@
     {
       "Id": "TZ202432816113",
       "Name": "Ajay Keelu",
-      "Location": "Hyderabad",
-      "DateOfBirth": "0001-01-01T00:00:00",
       "Email": "ajay@gmail.com",
       "MobileNumber": "",
+      "Location": "Hyderabad",
+      "DateOfBirth": "0001-01-01T00:00:00",
       "JobTitle": "TZ202432814586",
       "Department": "PE",
       "Manager": "Bhagavan",
       "Project": "Project 1",
       "Status": 1,
       "JoiningDate": "2024-01-17T00:00:00",
+      "IsActive": true
+    },
+    {
+      "Id": "TZ20244111165",
+      "Name": "aaa dds",
+      "Email": "asas@cd.cd",
+      "MobileNumber": "",
+      "Location": "Full Stack Developer",
+      "DateOfBirth": "0001-01-01T00:00:00",
+      "JobTitle": "Frontend Developer",
+      "Department": "Tester",
+      "Manager": "",
+      "Project": "",
+      "Status": 1,
+      "JoiningDate": "2012-12-12T00:00:00",
       "IsActive": true
     }
   ],

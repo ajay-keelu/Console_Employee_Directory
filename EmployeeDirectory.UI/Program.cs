@@ -1,8 +1,6 @@
-﻿
-using EmployeeDirectory.Concerns;
+﻿using Microsoft.Extensions.DependencyInjection;
+using EmployeeDirectory.Contracts;
 using EmployeeDirectory.Services;
-using Microsoft.Extensions.DependencyInjection;
-
 public class Program
 {
 
@@ -17,12 +15,13 @@ public class Program
         IRoleService roleService = serviceProvider.GetRequiredService<IRoleService>();
         new EmployeeDirectory.UI.EmployeeDirectory(employeeService, roleService).Initialize();
     }
+
     static ServiceProvider Configure()
     {
         return new ServiceCollection()
                 .AddSingleton<IJsonServices, JsonServices>()
-                .AddSingleton<IRoleService, RoleService>()
                 .AddSingleton<IEmployeeService, EmployeeService>()
+                .AddSingleton<IRoleService, RoleService>()
                 .BuildServiceProvider();
     }
 

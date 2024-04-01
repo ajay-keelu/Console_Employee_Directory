@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
-      "EmployeeDirectory.Concerns/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "compile": {
-          "bin/placeholder/EmployeeDirectory.Concerns.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/EmployeeDirectory.Concerns.dll": {}
-        }
-      }
-    }
+    "net7.0": {}
   },
-  "libraries": {
-    "EmployeeDirectory.Concerns/1.0.0": {
-      "type": "project",
-      "path": "../EmployeeDirectory.Concerns/EmployeeDirectory.Concerns.csproj",
-      "msbuildProject": "../EmployeeDirectory.Concerns/EmployeeDirectory.Concerns.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net7.0": [
-      "EmployeeDirectory.Concerns >= 1.0.0"
-    ]
+    "net7.0": []
   },
   "packageFolders": {
     "C:\\Users\\ajay.keelu\\.nuget\\packages\\": {}
@@ -50,11 +31,7 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {
-            "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj": {
-              "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

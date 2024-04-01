@@ -57,6 +57,63 @@
         }
       }
     },
+    "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj",
+        "projectName": "EmployeeDirectory.Contracts",
+        "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj",
+        "packagesPath": "C:\\Users\\ajay.keelu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ajay.keelu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj": {
+                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.406\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Services\\EmployeeDirectory.Services.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -81,6 +138,9 @@
             "projectReferences": {
               "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj": {
                 "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj"
+              },
+              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
+                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj"
               }
             }
           }

@@ -22,3 +22,5 @@ C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\Employ
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\EmployeeDirectory.Database.pdb
 c:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.dll
 c:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\EmployeeDirectory.Contracts.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\EmployeeDirectory.Contracts.pdb

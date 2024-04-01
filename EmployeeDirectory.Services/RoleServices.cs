@@ -1,15 +1,16 @@
 using EmployeeDirectory.Concerns;
+using EmployeeDirectory.Contracts;
 namespace EmployeeDirectory.Services
 {
 
     public class RoleService : IRoleService
     {
 
-        private readonly IJsonServices _IJsonServices;
+        private readonly IJsonServices jsonServices;
 
-        public RoleService(IJsonServices IJsonServices)
+        public RoleService(IJsonServices jsonServices)
         {
-            this._IJsonServices = IJsonServices;
+            this.jsonServices = jsonServices;
         }
 
         public Role? GetById(string id)
@@ -31,7 +32,7 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            return (from role in this._IJsonServices.GetRoles() where role.IsActive select role).ToList();
+            return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList();
         }
 
         public bool DeleteById(string Id)
@@ -46,7 +47,7 @@ namespace EmployeeDirectory.Services
 
                     Roles.Add(role);
                 }
-                if (!this._IJsonServices.UpdateRoles(Roles)) throw new Exception();
+                if (!jsonServices.Save<Role>(Roles)) throw new Exception();
 
             }
             catch (Exception)
@@ -73,10 +74,10 @@ namespace EmployeeDirectory.Services
             try
             {
                 role.Id = this.GenerateId();
-                var Roles = this._IJsonServices.GetRoles();
+                var Roles = this.jsonServices.GetAll<Role>();
                 Roles.Add(role);
 
-                if (!this._IJsonServices.UpdateRoles(Roles))
+                if (!this.jsonServices.Save<Role>(Roles))
                     throw new Exception();
             }
             catch (Exception)
@@ -90,11 +91,11 @@ namespace EmployeeDirectory.Services
         {
             try
             {
-                var Roles = this._IJsonServices.GetRoles();
+                var Roles = this.jsonServices.GetAll<Role>();
                 int index = Roles.FindIndex(r => r.Id == role.Id);
                 Roles[index] = role;
 
-                if (!this._IJsonServices.UpdateRoles(Roles))
+                if (!jsonServices.Save<Role>(Roles))
                     throw new Exception();
             }
             catch (Exception)

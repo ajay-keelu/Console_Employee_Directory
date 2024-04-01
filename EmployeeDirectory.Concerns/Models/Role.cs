@@ -7,11 +7,11 @@ namespace EmployeeDirectory.Concerns
 
         public string? Name { get; set; }
 
-        public string? Department { get; set; }
+        public string? Department { get; set; } // maintain masterdata
 
         public string? Description { get; set; }
 
-        public string? Location { get; set; }
+        public string? Location { get; set; } // maintain masterdata
 
         public List<string> AssignedEmployees { get; set; }
 

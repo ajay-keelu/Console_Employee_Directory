@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "EmployeeDirectory.UI/1.0.0": {
         "dependencies": {
-          "EmployeeDirectory.Concerns": "1.0.0",
+          "EmployeeDirectory.Contracts": "1.0.0",
           "EmployeeDirectory.Database": "1.0.0",
           "EmployeeDirectory.Services": "1.0.0",
           "Microsoft.Extensions.DependencyInjection": "8.0.0"
@@ -41,17 +41,23 @@
           "EmployeeDirectory.Concerns.dll": {}
         }
       },
-      "EmployeeDirectory.Database/1.0.0": {
+      "EmployeeDirectory.Contracts/1.0.0": {
         "dependencies": {
           "EmployeeDirectory.Concerns": "1.0.0"
         },
+        "runtime": {
+          "EmployeeDirectory.Contracts.dll": {}
+        }
+      },
+      "EmployeeDirectory.Database/1.0.0": {
         "runtime": {
           "EmployeeDirectory.Database.dll": {}
         }
       },
       "EmployeeDirectory.Services/1.0.0": {
         "dependencies": {
-          "EmployeeDirectory.Concerns": "1.0.0"
+          "EmployeeDirectory.Concerns": "1.0.0",
+          "EmployeeDirectory.Contracts": "1.0.0"
         },
         "runtime": {
           "EmployeeDirectory.Services.dll": {}
@@ -80,6 +86,11 @@
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
     },
     "EmployeeDirectory.Concerns/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EmployeeDirectory.Contracts/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

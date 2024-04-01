@@ -2,8 +2,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeDirectory.Services\EmployeeDirectory.Services.csproj" />
-    <ProjectReference Include="..\EmployeeDirectory.Concerns\EmployeeDirectory.Concerns.csproj" />
+    <!-- <ProjectReference Include="..\EmployeeDirectory.Concerns\EmployeeDirectory.Concerns.csproj" /> -->
     <ProjectReference Include="..\EmployeeDirectory.Database\EmployeeDirectory.Database.csproj" />
+    <ProjectReference Include="..\EmployeeDirectory.Contracts\EmployeeDirectory.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

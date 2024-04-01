@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\EmployeeDirectory.Concerns\EmployeeDirectory.Concerns.csproj" />
-  </ItemGroup>
+  
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
