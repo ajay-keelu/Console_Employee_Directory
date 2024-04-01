@@ -3,7 +3,6 @@ using EmployeeDirectory.Concerns;
 
 namespace EmployeeDirectory.UI
 {
-
     public class Utility
     {
         public static void GetOption(out int option, int options)

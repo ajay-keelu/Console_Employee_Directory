@@ -40,7 +40,7 @@ namespace EmployeeDirectory.Services
 
         public List<Employee> GetAll()
         {
-            return (from employee in this._jsonServices.GetAll<Employee>() where employee.IsActive select employee).ToList();
+            return (from employee in this._jsonServices.GetAll<Employee>() where employee.IsActive select employee).ToList<Employee>();
         }
 
         public bool DeleteByID(string id)
@@ -88,26 +88,9 @@ namespace EmployeeDirectory.Services
             }
         }
 
-        public List<string> GetProperty(string prop)
+        public List<string> GetProperty<T>()
         {
-            List<string> list = new List<string>();
-            try
-            {
-                string path = @"Json/selectData.json";
-                SelectData selectData = JsonSerializer.Deserialize<SelectData>(File.ReadAllText(path));
-                if (prop == "location")
-                    list = selectData.Locations;
-                else if (prop == "department")
-                    list = selectData.Departments;
-                else
-                    list = selectData.JobTitles;
-
-            }
-            catch (System.Exception)
-            {
-                list = this.GetProperty(prop);
-            }
-            return list;
+            return _jsonServices.GetMasterData<T>();
         }
 
         public bool Update(Employee employee)

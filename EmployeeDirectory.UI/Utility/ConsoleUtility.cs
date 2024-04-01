@@ -3,7 +3,6 @@ using EmployeeDirectory.Concerns;
 namespace EmployeeDirectory.UI
 {
 
-
     public class ConsoleUtility
     {
         public static void PrintLine()

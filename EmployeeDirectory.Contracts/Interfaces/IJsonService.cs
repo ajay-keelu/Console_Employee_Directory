@@ -5,6 +5,7 @@ namespace EmployeeDirectory.Contracts
     {
         public List<T> GetAll<T>();
 
+        public List<string> GetMasterData<T>();
         public bool Save<T>(List<T> list);
 
     }

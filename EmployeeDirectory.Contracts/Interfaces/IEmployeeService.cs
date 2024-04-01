@@ -13,7 +13,7 @@ namespace EmployeeDirectory.Contracts
 
         public bool DeleteByID(string Id);
 
-        public List<string> GetProperty(string prop);
+        public List<string> GetProperty<T>();
 
         public List<Employee> GetAssignedEmployees(string roleId);
     }

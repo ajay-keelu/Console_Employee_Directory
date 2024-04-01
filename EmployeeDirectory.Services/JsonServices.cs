@@ -7,43 +7,73 @@ namespace EmployeeDirectory.Services
 
     public class JsonServices : IJsonServices
     {
-        public readonly string db = @"../EmployeeDirectory.Database/db.json";
+        public readonly string db = @"../EmployeeDirectory.Database/json/";
 
         public List<T> GetAll<T>()
         {
             List<T> list = new List<T>();
             try
             {
-                Database jsonData = JsonSerializer.Deserialize<Database>(File.ReadAllText(this.db));
 
                 if (typeof(T) == typeof(Employee))
                 {
-                    list = jsonData.Employees.Cast<T>().ToList();
+                    list = JsonSerializer.Deserialize<List<Employee>>(File.ReadAllText(this.db + @"Employees.json")).Cast<T>().ToList();
+                    foreach (var item in list)
+                    {
+                        Console.WriteLine(item.ToString());
+                    }
                 }
                 else
                 {
-                    list = jsonData.Roles.Cast<T>().ToList();
+                    list = JsonSerializer.Deserialize<List<Role>>(File.ReadAllText(this.db + @"Roles.json")).Cast<T>().ToList();
+                }
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e.Message);
+                list = this.GetAll<T>();
+            }
+            return list;
+        }
+
+        public List<string> GetMasterData<T>()
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                if (typeof(T) == typeof(Location))
+                {
+                    list = JsonSerializer.Deserialize<Location>(File.ReadAllText(this.db + "Locations.json")).Locations;
+                }
+                else if (typeof(T) == typeof(Department))
+                {
+                    list = JsonSerializer.Deserialize<Department>(File.ReadAllText(this.db + "Locations.json")).Departments;
+                }
+                else
+                {
+                    list = JsonSerializer.Deserialize<JobTitle>(File.ReadAllText(this.db + "Locations.json")).JobTitles;
                 }
             }
             catch (System.Exception)
             {
-                list = this.GetAll<T>();
+                list = this.GetMasterData<T>();
             }
             return list;
         }
 
         public bool Save<T>(List<T> list)
         {
+            List<T> jsonData;
             try
             {
-                Database jsonData = JsonSerializer.Deserialize<Database>(File.ReadAllText(this.db));
                 if (typeof(T) == typeof(Employee))
                 {
-                    jsonData.Employees = list.Cast<Employee>().ToList();
+                    jsonData = JsonSerializer.Deserialize<List<Employee>>(File.ReadAllText(this.db + "Employees.json")).Cast<T>().ToList();
+
                 }
                 else
                 {
-                    jsonData.Roles = list.Cast<Role>().ToList();
+                    jsonData = JsonSerializer.Deserialize<List<Role>>(File.ReadAllText(this.db + "Employees.json")).Cast<T>().ToList();
                 }
                 File.WriteAllText(db, JsonSerializer.Serialize(jsonData));
                 return true;

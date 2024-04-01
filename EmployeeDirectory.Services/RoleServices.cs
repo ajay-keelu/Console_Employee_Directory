@@ -33,29 +33,13 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList();
+            return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList<Role>();
         }
 
-        public List<string> GetProperty(string prop)
+        public List<string> GetProperty<T>()
         {
-            List<string> list = new List<string>();
-            try
-            {
-                string path = @"Json/selectData.json";
-                SelectData selectData = JsonSerializer.Deserialize<SelectData>(File.ReadAllText(path));
-                if (prop == "name")
-                    list = selectData.JobTitles;
-                else if (prop == "location")
-                    list = selectData.Locations;
-                else
-                    list = selectData.Departments;
+            return this.jsonServices.GetMasterData<T>();
 
-            }
-            catch (System.Exception)
-            {
-                list = this.GetProperty(prop);
-            }
-            return list;
         }
 
         public bool DeleteById(string Id)
