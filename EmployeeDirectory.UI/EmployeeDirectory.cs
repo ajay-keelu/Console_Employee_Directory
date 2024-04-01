@@ -1,6 +1,7 @@
 using EmployeeDirectory.Contracts;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.Services;
+using System.Drawing;
 
 namespace EmployeeDirectory.UI
 {
@@ -377,9 +378,9 @@ namespace EmployeeDirectory.UI
         {
             Role role = new Role()
             {
-                Name = this.GetRole(),
-                Department = Utility.GetInputString("Department ", true, null),
-                Location = Utility.GetInputString("Location", true, null),
+                Name = this.GetRoleProperty("name"),
+                Department = this.GetRoleProperty("department"),
+                Location = this.GetRoleProperty("location"),
                 Description = Utility.GetInputString("Description ", true, null),
             };
 
@@ -389,21 +390,21 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine("Please try again!");
         }
 
-        public string GetRole()
+        public string GetRoleProperty(string prop)
         {
             string res = "";
             try
             {
                 int option;
-                var roles = RoleService.GetProperty();
-                Console.WriteLine("Select Role :");
+                var roles = RoleService.GetProperty(prop);
+                Console.WriteLine("Select {0} :", prop);
                 ConsoleUtility.Print(roles);
                 Utility.GetOption(out option, roles.Count);
                 res = roles.ElementAt(option - 1);
             }
             catch (System.Exception)
             {
-                res = this.GetRole();
+                res = this.GetRoleProperty(prop);
             }
             return res;
         }
@@ -451,15 +452,15 @@ namespace EmployeeDirectory.UI
                 switch ((EditRoleMenu)option)
                 {
                     case EditRoleMenu.Name:
-                        role.Name = this.GetRole();
+                        role.Name = this.GetRoleProperty("name");
                         break;
 
                     case EditRoleMenu.Department:
-                        role.Department = Utility.GetInputString("Department", true, null);
+                        role.Department = this.GetRoleProperty("department");
                         break;
 
                     case EditRoleMenu.Location:
-                        role.Location = Utility.GetInputString("Location", true, null);
+                        role.Location = this.GetRoleProperty("location");
                         break;
 
                     case EditRoleMenu.Description:

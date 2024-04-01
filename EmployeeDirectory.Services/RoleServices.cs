@@ -36,19 +36,24 @@ namespace EmployeeDirectory.Services
             return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList();
         }
 
-        public List<string> GetProperty()
+        public List<string> GetProperty(string prop)
         {
             List<string> list = new List<string>();
             try
             {
                 string path = @"Json/selectData.json";
                 SelectData selectData = JsonSerializer.Deserialize<SelectData>(File.ReadAllText(path));
-                list = selectData.JobTitles;
+                if (prop == "name")
+                    list = selectData.JobTitles;
+                else if (prop == "location")
+                    list = selectData.Locations;
+                else
+                    list = selectData.Departments;
 
             }
             catch (System.Exception)
             {
-                list = this.GetProperty();
+                list = this.GetProperty(prop);
             }
             return list;
         }

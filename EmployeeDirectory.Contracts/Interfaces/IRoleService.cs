@@ -15,7 +15,7 @@ namespace EmployeeDirectory.Contracts
 
         public bool AreRolesExist();
 
-        public List<string> GetProperty();
+        public List<string> GetProperty(string prop);
 
         public List<string> GetRoleName();
     }

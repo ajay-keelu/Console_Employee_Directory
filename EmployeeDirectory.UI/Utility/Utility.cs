@@ -65,7 +65,7 @@ namespace EmployeeDirectory.UI
             }
             catch (Exception)
             {
-                Console.WriteLine("Please enter valid {0}  ... ", propertyName);
+                Console.WriteLine("Please enter valid {0} ... ", propertyName);
                 return GetInputDate(propertyName, isRequired);
             }
         }
