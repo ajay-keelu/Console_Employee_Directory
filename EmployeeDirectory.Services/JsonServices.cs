@@ -17,15 +17,15 @@ namespace EmployeeDirectory.Services
 
                 if (typeof(T) == typeof(Employee))
                 {
-                    list = JsonSerializer.Deserialize<List<Employee>>(File.ReadAllText(this.db + @"Employees.json")).Cast<T>().ToList();
+                    list = JsonSerializer.Deserialize<List<Employee>>(File.ReadAllText(this.db + @"Employees.json"))!.Cast<T>().ToList();
                     foreach (var item in list)
                     {
-                        Console.WriteLine(item.ToString());
+                        Console.WriteLine(item!.ToString());
                     }
                 }
                 else
                 {
-                    list = JsonSerializer.Deserialize<List<Role>>(File.ReadAllText(this.db + @"Roles.json")).Cast<T>().ToList();
+                    list = JsonSerializer.Deserialize<List<Role>>(File.ReadAllText(this.db + @"Roles.json"))!.Cast<T>().ToList();
                 }
             }
             catch (System.Exception e)
@@ -43,15 +43,15 @@ namespace EmployeeDirectory.Services
             {
                 if (typeof(T) == typeof(Location))
                 {
-                    list = JsonSerializer.Deserialize<Location>(File.ReadAllText(this.db + "Locations.json")).Locations;
+                    list = JsonSerializer.Deserialize<Location>(File.ReadAllText(this.db + "Locations.json"))!.Locations!;
                 }
                 else if (typeof(T) == typeof(Department))
                 {
-                    list = JsonSerializer.Deserialize<Department>(File.ReadAllText(this.db + "Locations.json")).Departments;
+                    list = JsonSerializer.Deserialize<Department>(File.ReadAllText(this.db + "Locations.json"))!.Departments!;
                 }
                 else
                 {
-                    list = JsonSerializer.Deserialize<JobTitle>(File.ReadAllText(this.db + "Locations.json")).JobTitles;
+                    list = JsonSerializer.Deserialize<JobTitle>(File.ReadAllText(this.db + "Locations.json"))!.JobTitles!;
                 }
             }
             catch (System.Exception)
@@ -68,12 +68,12 @@ namespace EmployeeDirectory.Services
             {
                 if (typeof(T) == typeof(Employee))
                 {
-                    jsonData = JsonSerializer.Deserialize<List<Employee>>(File.ReadAllText(this.db + "Employees.json")).Cast<T>().ToList();
+                    jsonData = JsonSerializer.Deserialize<List<Employee>>(File.ReadAllText(this.db + "Employees.json"))!.Cast<T>().ToList();
 
                 }
                 else
                 {
-                    jsonData = JsonSerializer.Deserialize<List<Role>>(File.ReadAllText(this.db + "Employees.json")).Cast<T>().ToList();
+                    jsonData = JsonSerializer.Deserialize<List<Role>>(File.ReadAllText(this.db + "Employees.json"))!.Cast<T>().ToList();
                 }
                 File.WriteAllText(db, JsonSerializer.Serialize(jsonData));
                 return true;

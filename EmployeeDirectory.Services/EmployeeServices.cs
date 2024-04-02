@@ -22,7 +22,7 @@ namespace EmployeeDirectory.Services
             }
             catch (Exception)
             {
-                return null;
+                return null!;
             }
         }
 

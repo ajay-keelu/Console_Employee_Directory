@@ -5,11 +5,13 @@ using EmployeeDirectory.Concerns;
 using EmployeeDirectory.UI;
 public class Program
 {
-    static ServiceProvider serviceProvider;
+    static ServiceProvider? serviceProvider;
+
     static void Main()
     {
         Initialize();
     }
+
     static void Initialize()
     {
         serviceProvider = Configure();
@@ -22,6 +24,7 @@ public class Program
         Console.WriteLine(Menus.ManagementMenu);
         int option;
         Utility.GetOption(out option, 3);
+
         switch ((MainMenu)option)
         {
             case MainMenu.Employee:
@@ -36,8 +39,10 @@ public class Program
                 Environment.Exit(0);
                 break;
         }
+
         ManagementInitialize();
     }
+
     static ServiceProvider Configure()
     {
         return new ServiceCollection()
@@ -45,7 +50,8 @@ public class Program
                 .AddSingleton<IEmployeeService, EmployeeService>()
                 .AddSingleton<IRoleService, RoleService>()
                 .AddSingleton<IEmployeeDirectory, EmployeeDirectory.UI.EmployeeDirectory>()
-                .AddSingleton<IRoleDirectory, RoleDirectory>().BuildServiceProvider();
+                .AddSingleton<IRoleDirectory, RoleDirectory>()
+                .BuildServiceProvider();
     }
 
 }

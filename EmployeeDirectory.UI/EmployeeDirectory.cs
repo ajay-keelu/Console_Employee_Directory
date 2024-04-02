@@ -5,13 +5,11 @@ using System.Drawing;
 
 namespace EmployeeDirectory.UI
 {
-
     public class EmployeeDirectory : IEmployeeDirectory
     {
         public readonly IEmployeeService EmployeeService;
 
         public readonly IRoleService RoleService;
-
 
         public EmployeeDirectory(IEmployeeService employeeService, IRoleService roleService)
         {
@@ -26,6 +24,7 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine(Menus.EmployeeMenu);
                 int option;
                 Utility.GetOption(out option, 6);
+
                 switch ((EmployeeMenu)option)
                 {
                     case EmployeeMenu.Add:
@@ -59,8 +58,6 @@ namespace EmployeeDirectory.UI
             }
 
         }
-
-
 
         private void AddEmployee()
         {
@@ -137,6 +134,7 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine("Select {0} :", prop);
                 List<string> list = this.EmployeeService.GetProperty<Location>();
                 ConsoleUtility.Print(list);
+
                 int option;
                 Utility.GetOption(out option, list.Count);
                 res = list.ElementAt(option - 1);
@@ -265,7 +263,7 @@ namespace EmployeeDirectory.UI
 
                 if (employee != null)
                 {
-                    if (EmployeeService.DeleteByID(employee.Id))
+                    if (EmployeeService.DeleteByID(employee.Id!))
                         Console.WriteLine("Employee deleted successfully.");
                     else
                         Console.WriteLine("Please try again!.");
@@ -292,7 +290,7 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in Employees)
             {
-                ConsoleUtility.PrintEmployeeRow(employee, this.RoleService.GetById(employee.JobTitle).Name);
+                ConsoleUtility.PrintEmployeeRow(employee, this.RoleService.GetById(employee.JobTitle!)!.Name!);
                 ConsoleUtility.PrintLine();
             }
         }
@@ -306,8 +304,8 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in employees)
             {
-                Role? role = this.RoleService.GetById(employee.JobTitle);
-                ConsoleUtility.PrintEmployeeRow(employee, role.Name);
+                Role? role = this.RoleService.GetById(employee.JobTitle!);
+                ConsoleUtility.PrintEmployeeRow(employee, role!.Name!);
                 ConsoleUtility.PrintLine();
             }
         }
