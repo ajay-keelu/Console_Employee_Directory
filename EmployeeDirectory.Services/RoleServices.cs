@@ -105,8 +105,9 @@ namespace EmployeeDirectory.Services
                 if (!jsonServices.Save<Role>(Roles))
                     throw new Exception();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.StackTrace);
                 return false;
             }
             return true;

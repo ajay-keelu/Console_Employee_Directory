@@ -28,18 +28,22 @@ namespace EmployeeDirectory.UI
                 {
                     case RoleMenu.Add:
                         this.AddRole();
+                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Edit:
                         this.EditRole();
+                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Delete:
                         this.DeleteRole();
+                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Display:
                         this.DisplayRoles();
+                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Back:
@@ -76,14 +80,15 @@ namespace EmployeeDirectory.UI
             try
             {
                 Console.WriteLine("Select {0} :", prop);
-                List<string> list = this.RoleService.GetProperty<Location>();
+                List<string> list = this.RoleService.GetProperty<T>();
                 ConsoleUtility.Print(list);
                 int option;
                 Utility.GetOption(out option, list.Count);
                 res = list.ElementAt(option - 1);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                Console.WriteLine(e.Message);
                 res = this.GetRoleProperty<T>(prop);
             }
             return res;
@@ -107,6 +112,8 @@ namespace EmployeeDirectory.UI
 
                     string? id = Console.ReadLine();
                     Role? role = this.RoleService.GetById(id ?? "");
+
+                    if (role == null) throw new Exception();
 
                     Console.WriteLine(Menus.EditRoleMenu);
                     int option;

@@ -29,22 +29,27 @@ namespace EmployeeDirectory.UI
                 {
                     case EmployeeMenu.Add:
                         this.AddEmployee();
+                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.Edit:
                         this.EditEmployee();
+                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.Delete:
                         this.DeleteEmployee();
+                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.DisplayAll:
                         this.DisplayEmployees();
+                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.DisplayOne:
                         this.DisplayEmployee();
+                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.Back:
@@ -56,7 +61,6 @@ namespace EmployeeDirectory.UI
             {
                 this.EmployeeInitalize();
             }
-
         }
 
         private void AddEmployee()
@@ -283,10 +287,10 @@ namespace EmployeeDirectory.UI
         private void DisplayEmployees()
         {
             var Employees = this.EmployeeService.GetAll();
-            if (Employees.Count == 0)
-                ConsoleUtility.PrintNoData();
-            else
+            if (Employees.Count > 0)
                 ConsoleUtility.PrintTableHead();
+            else
+                ConsoleUtility.PrintNoData();
 
             foreach (Employee employee in Employees)
             {
