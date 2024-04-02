@@ -33,7 +33,7 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList<Role>();
+            return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList();
         }
 
         public List<string> GetProperty<T>()

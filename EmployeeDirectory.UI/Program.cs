@@ -28,11 +28,11 @@ public class Program
         switch ((MainMenu)option)
         {
             case MainMenu.Employee:
-                serviceProvider.GetRequiredService<IEmployeeDirectory>().EmployeeInitalize();
+                serviceProvider?.GetRequiredService<IEmployeeDirectory>().EmployeeInitalize();
                 break;
 
             case MainMenu.Role:
-                serviceProvider.GetRequiredService<IRoleDirectory>().RoleInitialize();
+                serviceProvider?.GetRequiredService<IRoleDirectory>().RoleInitialize();
                 break;
 
             case MainMenu.Exit:

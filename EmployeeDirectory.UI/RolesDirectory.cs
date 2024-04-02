@@ -9,7 +9,6 @@ namespace EmployeeDirectory.UI
 
         public readonly IRoleService RoleService;
 
-
         public RoleDirectory(IEmployeeService employeeService, IRoleService roleService)
         {
             EmployeeService = employeeService;
@@ -62,9 +61,9 @@ namespace EmployeeDirectory.UI
         {
             Role role = new Role()
             {
-                Name = this.GetRoleProperty<JobTitle>("name"),
-                Department = this.GetRoleProperty<Department>("department"),
-                Location = this.GetRoleProperty<Location>("location"),
+                Name = this.GetRoleProperty<JobTitle>(),
+                Department = this.GetRoleProperty<Department>(),
+                Location = this.GetRoleProperty<Location>(),
                 Description = Utility.GetInputString("Description ", true, null),
             };
 
@@ -74,12 +73,12 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine("Please try again!");
         }
 
-        private string GetRoleProperty<T>(string prop)
+        private string GetRoleProperty<T>()
         {
             string res = "";
             try
             {
-                Console.WriteLine("Select {0} :", prop);
+                Console.WriteLine("Select {0} :", typeof(T).ToString().ToLower());
                 List<string> list = this.RoleService.GetProperty<T>();
                 ConsoleUtility.Print(list);
                 int option;
@@ -89,7 +88,7 @@ namespace EmployeeDirectory.UI
             catch (System.Exception e)
             {
                 Console.WriteLine(e.Message);
-                res = this.GetRoleProperty<T>(prop);
+                res = this.GetRoleProperty<T>();
             }
             return res;
         }
@@ -139,15 +138,15 @@ namespace EmployeeDirectory.UI
                 switch ((EditRoleMenu)option)
                 {
                     case EditRoleMenu.Name:
-                        role.Name = this.GetRoleProperty<JobTitle>("name");
+                        role.Name = this.GetRoleProperty<JobTitle>();
                         break;
 
                     case EditRoleMenu.Department:
-                        role.Department = this.GetRoleProperty<Department>("department");
+                        role.Department = this.GetRoleProperty<Department>();
                         break;
 
                     case EditRoleMenu.Location:
-                        role.Location = this.GetRoleProperty<Location>("location");
+                        role.Location = this.GetRoleProperty<Location>();
                         break;
 
                     case EditRoleMenu.Description:
@@ -179,7 +178,7 @@ namespace EmployeeDirectory.UI
             {
                 foreach (string rolename in roles)
                 {
-                    Console.WriteLine("{0}", rolename);
+                    Console.WriteLine(rolename);
                 }
                 Console.WriteLine("Enter role id");
                 string? id = Console.ReadLine();
@@ -188,7 +187,7 @@ namespace EmployeeDirectory.UI
 
                 if (role != null)
                 {
-                    if (this.EmployeeService.GetAssignedEmployees(role.Id).Count > 0)
+                    if (this.EmployeeService.GetAssignedEmployees(role.Id!).Count > 0)
                     {
                         Console.WriteLine("{0} role contains employees. Please assign employees to another role and then try to delete the role.", role.Name);
                     }
@@ -239,12 +238,11 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in employees)
             {
-                Role? role = this.RoleService.GetById(employee.JobTitle);
-                ConsoleUtility.PrintEmployeeRow(employee, role.Name);
+                Role? role = this.RoleService.GetById(employee.JobTitle!);
+                ConsoleUtility.PrintEmployeeRow(employee, role?.Name!);
                 ConsoleUtility.PrintLine();
             }
         }
-
 
     }
 }
