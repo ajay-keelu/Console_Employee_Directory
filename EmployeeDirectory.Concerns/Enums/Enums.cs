@@ -3,14 +3,14 @@ namespace EmployeeDirectory.Concerns
     public enum MainMenu
     {
         Employee = 1,
-        Role = 2,
-        Exit = 3
+        Role,
+        Exit
     }
 
     public enum EmployeeStatus
     {
         Active = 1,
-        inActive = 2
+        inActive
     }
 
     public enum EmployeeMenu

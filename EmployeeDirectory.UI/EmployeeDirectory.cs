@@ -23,28 +23,25 @@ namespace EmployeeDirectory.UI
             {
                 Console.WriteLine(Menus.EmployeeMenu);
                 int option;
+                bool flag = false;
                 Utility.GetOption(out option, 6);
 
                 switch ((EmployeeMenu)option)
                 {
                     case EmployeeMenu.Add:
                         this.AddEmployee();
-                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.Edit:
                         this.EditEmployee();
-                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.Delete:
                         this.DeleteEmployee();
-                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.DisplayAll:
                         this.DisplayEmployees();
-                        this.EmployeeInitalize();
                         break;
 
                     case EmployeeMenu.DisplayOne:
@@ -53,8 +50,11 @@ namespace EmployeeDirectory.UI
                         break;
 
                     case EmployeeMenu.Back:
+                        flag = true;
                         break;
                 }
+                if (!flag)
+                    this.EmployeeInitalize();
 
             }
             catch (Exception)

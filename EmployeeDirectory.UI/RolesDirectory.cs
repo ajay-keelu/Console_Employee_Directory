@@ -22,32 +22,31 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine(Menus.RoleMenu);
                 int option;
                 Utility.GetOption(out option, 5);
-
+                bool flag = false;
                 switch ((RoleMenu)option)
                 {
                     case RoleMenu.Add:
                         this.AddRole();
-                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Edit:
                         this.EditRole();
-                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Delete:
                         this.DeleteRole();
-                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Display:
                         this.DisplayRoles();
-                        this.RoleInitialize();
                         break;
 
                     case RoleMenu.Back:
                         break;
                 }
+                if (!flag)
+                    this.RoleInitialize();
+
             }
             catch (Exception)
             {
