@@ -42,8 +42,10 @@ namespace EmployeeDirectory.UI
                         break;
 
                     case RoleMenu.Back:
+                        flag = true;
                         break;
                 }
+                
                 if (!flag)
                     this.RoleInitialize();
 
