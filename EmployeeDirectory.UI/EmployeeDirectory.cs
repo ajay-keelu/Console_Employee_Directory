@@ -133,10 +133,15 @@ namespace EmployeeDirectory.UI
         private string PropertyAssign(string prop)
         {
             string res = "";
+            List<string> list;
             try
             {
                 Console.WriteLine("Select {0} :", prop);
-                List<string> list = this.EmployeeService.GetProperty<Location>();
+                if(prop.Equals("location"))
+                    list = this.EmployeeService.GetProperty<Location>();
+                else
+                    list = this.EmployeeService.GetProperty<Department>();
+
                 ConsoleUtility.Print(list);
 
                 int option;
