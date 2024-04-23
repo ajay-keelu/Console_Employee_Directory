@@ -2,6 +2,7 @@ namespace EmployeeDirectory.Concerns
 {
     public class JobTitle
     {
-        public List<string>? JobTitles { get; set; }
+        public int Id;
+        public string Name;
     }
 }

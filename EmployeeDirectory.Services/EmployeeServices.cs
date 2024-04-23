@@ -1,4 +1,4 @@
-using System.Text.Json;
+using System.Data;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.Contracts;
 
@@ -7,11 +7,11 @@ namespace EmployeeDirectory.Services
 
     public class EmployeeService : IEmployeeService
     {
-        private readonly IJsonServices _jsonServices;
+        private readonly IDatabaseServices databaseServices;
 
-        public EmployeeService(IJsonServices jsonServices)
+        public EmployeeService(IDatabaseServices databaseServices)
         {
-            this._jsonServices = jsonServices;
+            this.databaseServices = databaseServices;
         }
 
         public Employee GetById(string id)
@@ -30,7 +30,7 @@ namespace EmployeeDirectory.Services
         {
             try
             {
-                return (from employee in this.GetAll() where employee.JobTitle == Id select employee).ToList();
+                return (from employee in this.GetAll() where employee.JobTitle == int.Parse(Id) select employee).ToList();
             }
             catch (Exception)
             {
@@ -40,77 +40,96 @@ namespace EmployeeDirectory.Services
 
         public List<Employee> GetAll()
         {
-            return (from employee in this._jsonServices.GetAll<Employee>() where employee.IsActive select employee).ToList<Employee>();
+            DataTable dataTable = this.databaseServices.GetAll<Employee>();
+            List<Employee> employees = new List<Employee>();
+            foreach (Employee emp in dataTable.Rows)
+            {
+                employees.Add(emp);
+            }
+            return employees;
         }
 
         public bool DeleteByID(string id)
         {
             try
             {
-                var employees = this.GetAll();
-                employees = employees.FindAll(emp => emp.Id != id);
-                if (!this._jsonServices.Save<Employee>(employees))
-                    throw new Exception();
-
-                return true;
+                if (!databaseServices.Delete<Employee>(id)) return false;
             }
             catch (Exception)
             {
                 return false;
             }
+            return true;
         }
 
-        public bool Save(Employee employee)
-        {
-            if (string.IsNullOrEmpty(employee.Id))
-                return this.Create(employee);
-            else
-                return this.Update(employee);
-        }
-
-        private bool Create(Employee employee)
+        public bool Update(string property, string value, int Id)
         {
             try
             {
-                employee.Id = this.GenerateId();
+                if (!databaseServices.Update<Employee>(property, value, Id)) return false;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            return true;
+        }
 
-                var employees = this.GetAll();
-                employees.Add(employee);
-
-                if (!this._jsonServices.Save<Employee>(employees))
+        public bool Create(Employee employee)
+        {
+            try
+            {
+                if (!this.databaseServices.Create<Employee>(employee))
                     throw new Exception();
 
-                return true;
             }
             catch (Exception)
             {
                 return false;
             }
+            return true;
         }
 
         public List<string> GetProperty<T>()
         {
-            return _jsonServices.GetMasterData<T>();
+            List<string> propertyList = new List<string>();
+            DataTable dataTable = databaseServices.GetMasterData<T>();
+            if (typeof(T) == typeof(Location))
+            {
+                foreach (Location item in dataTable.Rows)
+                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
+            }
+            else if (typeof(T) == typeof(Department))
+            {
+                foreach (Department item in dataTable.Rows)
+                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
+            }
+            else
+            {
+                foreach (JobTitle item in dataTable.Rows)
+                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
+            }
+            return propertyList;
         }
 
-        public bool Update(Employee employee)
-        {
-            try
-            {
-                var employees = this.GetAll();
-                int index = employees.FindIndex(emp => emp.Id == employee.Id);
-                employees[index] = employee;
+        // public bool Update(Employee employee)
+        // {
+        //     try
+        //     {
+        //         var employees = this.GetAll();
+        //         int index = employees.FindIndex(emp => emp.Id == employee.Id);
+        //         employees[index] = employee;
 
-                if (!this._jsonServices.Save<Employee>(employees))
-                    throw new Exception();
+        //         if (!this.databaseServices.Save<Employee>(employees))
+        //             throw new Exception();
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        //         return true;
+        //     }
+        //     catch (Exception)
+        //     {
+        //         return false;
+        //     }
+        // }
 
         private string GenerateId()
         {

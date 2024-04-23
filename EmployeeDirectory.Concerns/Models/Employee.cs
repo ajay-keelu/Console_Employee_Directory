@@ -6,13 +6,13 @@ namespace EmployeeDirectory.Concerns
 
         public string? Name { get; set; }
 
-        public string? Email { get; set; }
+        // public string? Email { get; set; }
 
-        public string? MobileNumber { get; set; }
+        // public string? MobileNumber { get; set; }
 
         public string? Location { get; set; } // maintain masterdata
 
-        public DateTime? DateOfBirth { get; set; }
+        // public DateTime? DateOfBirth { get; set; }
 
         public string? JobTitle { get; set; } // maintain masterdata
 
@@ -26,11 +26,11 @@ namespace EmployeeDirectory.Concerns
 
         public DateTime? JoiningDate { get; set; }
 
-        public bool IsActive { get; set; }
+        // public bool IsActive { get; set; }
 
         public Employee()
         {
-            this.IsActive = true;
+            // this.IsActive = true;
             this.Status = EmployeeStatus.Active;
         }
 

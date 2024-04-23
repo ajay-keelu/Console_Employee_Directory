@@ -1,4 +1,5 @@
 
+
 using EmployeeDirectory.Concerns;
 
 namespace EmployeeDirectory.Contracts
@@ -9,10 +10,11 @@ namespace EmployeeDirectory.Contracts
 
         public Employee GetById(string id);
 
-        public bool Save(Employee employee);
-
+        public bool Update(string property,string value,int Id);
+        
         public bool DeleteByID(string Id);
 
+        public bool Create(Employee employee);
         public List<string> GetProperty<T>();
 
         public List<Employee> GetAssignedEmployees(string roleId);

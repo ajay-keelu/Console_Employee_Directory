@@ -135,7 +135,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
+                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -147,6 +151,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -189,11 +199,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj": {
-                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Concerns\\EmployeeDirectory.Concerns.csproj"
-              },
-              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
-                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj"
+              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Database\\EmployeeDirectory.Database.csproj": {
+                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Database\\EmployeeDirectory.Database.csproj"
               }
             }
           }
@@ -249,12 +256,6 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj": {
-                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Contracts\\EmployeeDirectory.Contracts.csproj"
-              },
-              "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Database\\EmployeeDirectory.Database.csproj": {
-                "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Database\\EmployeeDirectory.Database.csproj"
-              },
               "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Services\\EmployeeDirectory.Services.csproj": {
                 "projectPath": "C:\\Users\\ajay.keelu\\OneDrive - Technovert\\Desktop\\Tasks\\EmployeeDirectory\\EmployeeDirectory.Services\\EmployeeDirectory.Services.csproj"
               }

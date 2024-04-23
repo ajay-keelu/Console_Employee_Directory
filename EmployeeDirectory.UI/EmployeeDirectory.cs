@@ -72,18 +72,18 @@ namespace EmployeeDirectory.UI
                 Employee employee = new Employee()
                 {
                     Name = Utility.GetInputString("Fullname", true, RegularExpression.NamePattern),
-                    Email = Utility.GetInputEmail(),
-                    MobileNumber = Utility.GetMobileNumber(),
+                    // Email = Utility.GetInputEmail(),
+                    // MobileNumber = Utility.GetMobileNumber(),
                     JobTitle = this.AssignRoleToEmployee(),
                     JoiningDate = Utility.GetInputDate("Joining date", true),
                     Location = this.PropertyAssign("location"),
                     Department = this.PropertyAssign("department"),
-                    DateOfBirth = Utility.GetInputDate("Date of birth", false),
+                    // DateOfBirth = Utility.GetInputDate("Date of birth", false),
                     Manager = Utility.GetInputString("Manager ", false, null),
                     Project = Utility.GetInputString("Project ", false, null),
                 };
 
-                if (this.EmployeeService.Save(employee))
+                if (this.EmployeeService.Create(employee))
                     Console.WriteLine("Employee created successfully. \n");
                 else
                     Console.WriteLine("Error in creation of employee.");
@@ -137,7 +137,7 @@ namespace EmployeeDirectory.UI
             try
             {
                 Console.WriteLine("Select {0} :", prop);
-                if(prop.Equals("location"))
+                if (prop.Equals("location"))
                     list = this.EmployeeService.GetProperty<Location>();
                 else
                     list = this.EmployeeService.GetProperty<Department>();
@@ -157,52 +157,64 @@ namespace EmployeeDirectory.UI
 
         private void UpdateEmployee(int option, Employee employee)
         {
-            switch ((EditEmployeeMenu)option)
+            try
             {
-                case EditEmployeeMenu.Name:
-                    employee.Name = Utility.GetInputString("Fullname", true, RegularExpression.NamePattern);
-                    break;
+                switch ((EditEmployeeMenu)option)
+                {
+                    case EditEmployeeMenu.Name:
+                        employee.Name = Utility.GetInputString("Fullname", true, RegularExpression.NamePattern);
+                        EmployeeService.Update("Name", employee.Name, int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.Location:
-                    employee.Location = this.PropertyAssign("location");
-                    break;
+                    case EditEmployeeMenu.Location:
+                        employee.Location = this.PropertyAssign("location");
+                        EmployeeService.Update("Name", employee.Location, int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.Department:
-                    employee.Department = this.PropertyAssign("department");
-                    break;
+                    case EditEmployeeMenu.Department:
+                        employee.Department = this.PropertyAssign("department");
+                        EmployeeService.Update("Name", employee.Department, int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.JoiningDate:
-                    employee.JoiningDate = Utility.GetInputDate("Joining date", true);
-                    break;
+                    case EditEmployeeMenu.JoiningDate:
+                        employee.JoiningDate = Utility.GetInputDate("Joining date", true);
+                        EmployeeService.Update("JoiningDate", employee.JoiningDate.ToString(), int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.Jobtitle:
-                    employee.JobTitle = this.AssignRoleToEmployee();
-                    break;
+                    case EditEmployeeMenu.Jobtitle:
+                        employee.JobTitle = this.AssignRoleToEmployee();
+                        EmployeeService.Update("Role", employee.JobTitle, int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.DateOfBirth:
-                    employee.DateOfBirth = Utility.GetInputDate("Date of birth", false);
-                    break;
+                    // case EditEmployeeMenu.DateOfBirth:
+                    //     employee.DateOfBirth = Utility.GetInputDate("Date of birth", false);
+                    //     break;
 
-                case EditEmployeeMenu.Email:
-                    employee.Email = Utility.GetInputEmail();
-                    break;
+                    // case EditEmployeeMenu.Email:
+                    //     employee.Email = Utility.GetInputEmail();
+                    //     break;
 
-                case EditEmployeeMenu.Manager:
-                    employee.Manager = Utility.GetInputString("Manager ", false, null);
-                    break;
+                    case EditEmployeeMenu.Manager:
+                        employee.Manager = Utility.GetInputString("Manager ", false, null);
+                        EmployeeService.Update("Manager", employee.Manager, int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.Project:
-                    employee.Project = Utility.GetInputString("Project ", false, null);
-                    break;
+                    case EditEmployeeMenu.Project:
+                        employee.Project = Utility.GetInputString("Project ", false, null);
+                        EmployeeService.Update("Project", employee.Project, int.Parse(employee.Id));
+                        break;
 
-                case EditEmployeeMenu.Back:
-                    this.EmployeeInitalize();
-                    break;
+                    case EditEmployeeMenu.Back:
+                        this.EmployeeInitalize();
+                        break;
+                }
+                Console.WriteLine("\nUpdated successfully.");
+
             }
-
-            EmployeeService.Save(employee);
-            Console.WriteLine("\nUpdated successfully.");
-
+            catch (System.Exception)
+            {
+                Console.WriteLine("Oops! Something went wrong");
+            }
             this.EmployeeInitalize();
         }
 

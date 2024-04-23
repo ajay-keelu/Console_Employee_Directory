@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\EmployeeDirectory.Concerns\EmployeeDirectory.Concerns.csproj" />
-    <ProjectReference Include="..\EmployeeDirectory.Contracts\EmployeeDirectory.Contracts.csproj" />
+    <ProjectReference Include="..\EmployeeDirectory.Database\EmployeeDirectory.Database.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

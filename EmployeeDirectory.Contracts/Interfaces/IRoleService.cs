@@ -9,9 +9,11 @@ namespace EmployeeDirectory.Contracts
 
         public Role? GetById(string id);
 
-        public bool Save(Role role);
+        public bool Create(Role role);
 
         public bool DeleteById(string Id);
+
+        public bool Update(string property, string value, int Id);
 
         public bool AreRolesExist();
 

@@ -13,14 +13,14 @@ namespace EmployeeDirectory.Concerns
 
         public string? Location { get; set; } // maintain masterdata
 
-        public List<string> AssignedEmployees { get; set; }
+        // public List<string> AssignedEmployees { get; set; }
 
-        public bool IsActive { get; set; }
+        // public bool IsActive { get; set; }
 
         public Role()
         {
-            this.AssignedEmployees = new List<string>();
-            this.IsActive = true;
+            // this.AssignedEmployees = new List<string>();
+            // this.IsActive = true;
         }
     }
 }

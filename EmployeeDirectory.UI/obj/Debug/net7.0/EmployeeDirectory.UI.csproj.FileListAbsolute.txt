@@ -24,3 +24,9 @@ c:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\Employ
 c:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\EmployeeDirectory.Contracts.dll
 C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\EmployeeDirectory.Contracts.pdb
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\System.Data.SqlClient.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\ajay.keelu\OneDrive - Technovert\Desktop\Tasks\EmployeeDirectory\EmployeeDirectory.UI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

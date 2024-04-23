@@ -3,6 +3,7 @@ using EmployeeDirectory.Contracts;
 using EmployeeDirectory.Services;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.UI;
+using System.Data.Common;
 public class Program
 {
     static ServiceProvider? serviceProvider;
@@ -46,11 +47,12 @@ public class Program
     static ServiceProvider Configure()
     {
         return new ServiceCollection()
-                .AddSingleton<IJsonServices, JsonServices>()
                 .AddSingleton<IEmployeeService, EmployeeService>()
                 .AddSingleton<IRoleService, RoleService>()
+                .AddSingleton<IDbConnectionLocal, EmployeeDirectory.Database.DbConnection>()
                 .AddSingleton<IEmployeeDirectory, EmployeeDirectory.UI.EmployeeDirectory>()
                 .AddSingleton<IRoleDirectory, RoleDirectory>()
+                .AddSingleton<IDatabaseServices, DatabaseServices>()
                 .BuildServiceProvider();
     }
 

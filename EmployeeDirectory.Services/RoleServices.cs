@@ -1,4 +1,4 @@
-using System.Text.Json;
+using System.Data;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.Contracts;
 namespace EmployeeDirectory.Services
@@ -7,11 +7,11 @@ namespace EmployeeDirectory.Services
     public class RoleService : IRoleService
     {
 
-        private readonly IJsonServices jsonServices;
+        private readonly IDatabaseServices databaseServices;
 
-        public RoleService(IJsonServices jsonServices)
+        public RoleService(IDatabaseServices databaseServices)
         {
-            this.jsonServices = jsonServices;
+            this.databaseServices = databaseServices;
         }
 
         public Role? GetById(string id)
@@ -33,35 +33,47 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            return (from role in this.jsonServices.GetAll<Role>() where role.IsActive select role).ToList();
+            DataTable dataTable = this.databaseServices.GetAll<Employee>();
+            List<Role> roles = new List<Role>();
+            foreach (Role emp in dataTable.Rows)
+            {
+                roles.Add(emp);
+            }
+            return roles;
         }
 
         public List<string> GetProperty<T>()
         {
-            return this.jsonServices.GetMasterData<T>();
-
+            List<string> propertyList = new List<string>();
+            DataTable dataTable = databaseServices.GetMasterData<T>();
+            if (typeof(T) == typeof(Location))
+            {
+                foreach (Location item in dataTable.Rows)
+                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
+            }
+            else if (typeof(T) == typeof(Department))
+            {
+                foreach (Department item in dataTable.Rows)
+                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
+            }
+            else
+            {
+                foreach (JobTitle item in dataTable.Rows)
+                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
+            }
+            return propertyList;
         }
 
         public bool DeleteById(string Id)
         {
             try
             {
-                var Roles = new List<Role>();
-                foreach (Role role in this.GetAll())
-                {
-                    if (role.Id == Id)
-                        role.IsActive = false;
-
-                    Roles.Add(role);
-                }
-                if (!jsonServices.Save<Role>(Roles)) throw new Exception();
-
+                if (!databaseServices.Delete<Role>(Id)) return false;
             }
             catch (Exception)
             {
                 return false;
             }
-
             return true;
         }
 
@@ -70,22 +82,26 @@ namespace EmployeeDirectory.Services
             return (from role in this.GetAll() select role.Id + " " + role.Name?.ToUpper()).ToList();
         }
 
-        public bool Save(Role role)
+        public bool Update(string property, string value, int Id)
         {
-            if (string.IsNullOrEmpty(role.Id)) return this.Create(role);
-            else return this.Update(role);
+            try
+            {
+                if (!databaseServices.Update<Role>(property, value, Id)) return false;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool Create(Role role)
         {
             try
             {
-                role.Id = this.GenerateId();
-                var Roles = this.jsonServices.GetAll<Role>();
-                Roles.Add(role);
-
-                if (!this.jsonServices.Save<Role>(Roles))
+                if (!this.databaseServices.Create<Role>(role))
                     throw new Exception();
+
             }
             catch (Exception)
             {
@@ -94,24 +110,6 @@ namespace EmployeeDirectory.Services
             return true;
         }
 
-        public bool Update(Role role)
-        {
-            try
-            {
-                var Roles = this.jsonServices.GetAll<Role>();
-                int index = Roles.FindIndex(r => r.Id == role.Id);
-                Roles[index] = role;
-
-                if (!jsonServices.Save<Role>(Roles))
-                    throw new Exception();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-                return false;
-            }
-            return true;
-        }
 
         public string GenerateId()
         {
