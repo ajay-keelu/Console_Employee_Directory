@@ -26,7 +26,7 @@ namespace EmployeeDirectory.UI
 
         public static string GetInputString(string propertyName, bool isRequired, string? pattern)
         {
-            string? input;
+            string? input = null;
             try
             {
                 Console.WriteLine("Enter {0}{1}", propertyName, isRequired ? "*" : "");

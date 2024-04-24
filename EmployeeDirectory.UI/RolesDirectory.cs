@@ -80,7 +80,7 @@ namespace EmployeeDirectory.UI
             int option;
             try
             {
-                Console.WriteLine("Select {0} :", typeof(T).ToString().ToLower());
+                Console.WriteLine("Select {0} :", typeof(T).ToString().Split(".").Last().ToLower());
                 List<string> list = this.RoleService.GetProperty<T>();
                 ConsoleUtility.Print(list);
                 Utility.GetOption(out option, list.Count);
@@ -155,7 +155,7 @@ namespace EmployeeDirectory.UI
 
                     case EditRoleMenu.Description:
                         role.Description = Utility.GetInputString("Description", true, null);
-                        this.RoleService.Update("Department", role.Description, int.Parse(role.Id));
+                        this.RoleService.Update("Description", role.Description, int.Parse(role.Id));
                         break;
                     case EditRoleMenu.Back:
                         this.RoleInitialize();
@@ -191,7 +191,7 @@ namespace EmployeeDirectory.UI
 
                 if (role != null)
                 {
-                    if (this.EmployeeService.GetAssignedEmployees(role.Id!).Count > 0)
+                    if (this.EmployeeService.GetAssignedEmployees(role.Name).Count > 0)
                     {
                         Console.WriteLine("{0} role contains employees. Please assign employees to another role and then try to delete the role.", role.Name);
                     }
@@ -228,7 +228,7 @@ namespace EmployeeDirectory.UI
             {
                 ConsoleUtility.PrintRoleHeader();
                 ConsoleUtility.PrintRoleRow(role);
-                this.DisplayEmployees(this.EmployeeService.GetAssignedEmployees(role.Id));
+                this.DisplayEmployees(this.EmployeeService.GetAssignedEmployees(role.Name));
                 Console.WriteLine("===========================================================================================================================================================================");
             }
         }
@@ -243,7 +243,7 @@ namespace EmployeeDirectory.UI
             foreach (Employee employee in employees)
             {
                 Role? role = this.RoleService.GetById(employee.JobTitle.ToString()!);
-                ConsoleUtility.PrintEmployeeRow(employee, role?.Name!);
+                ConsoleUtility.PrintEmployeeRow(employee);//, role?.Name!);
                 ConsoleUtility.PrintLine();
             }
         }

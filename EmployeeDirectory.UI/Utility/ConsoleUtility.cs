@@ -39,12 +39,12 @@ namespace EmployeeDirectory.UI
             Console.WriteLine("+------------------+------------------+------------------+------------------+------------------+--------------------+--------------------+-------------+------------------+");
         }
 
-        public static void PrintEmployeeRow(Employee employee, string roleName)
+        public static void PrintEmployeeRow(Employee employee)
         {
             string fullname = GetPropertyWithWidth(employee.Name is null or "" ? "No data" : employee.Name, 20);
             string department = GetPropertyWithWidth(employee.Department is null or "" ? "No data" : employee.Department, 20);
             string location = GetPropertyWithWidth(employee.Location is null or "" ? "No data" : employee.Location, 20);
-            string role = GetPropertyWithWidth(roleName, 20);
+            string role = GetPropertyWithWidth(employee.JobTitle, 20);
             string status = GetPropertyWithWidth(employee.Status.ToString(), 15);
             string manager = GetPropertyWithWidth(employee.Manager is null or "" ? "No data" : employee.Manager, 22);
             string project = GetPropertyWithWidth(employee.Project is null or "" ? "No data" : employee.Project, 22);
@@ -62,7 +62,7 @@ namespace EmployeeDirectory.UI
         public static void Print(List<string> list)
         {
             for (int i = 0; i < list.Count; i++)
-                Console.WriteLine("{0}. {1}", i + 1, list.ElementAt(i));
+                Console.WriteLine("{0}", list.ElementAt(i));
         }
         public static void PrintRoleRow(Role role)
         {

@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.Contracts;
 
@@ -7,7 +8,7 @@ namespace EmployeeDirectory.Services
 
     public class EmployeeService : IEmployeeService
     {
-        private readonly IDatabaseServices databaseServices;
+        public readonly IDatabaseServices databaseServices;
 
         public EmployeeService(IDatabaseServices databaseServices)
         {
@@ -26,11 +27,11 @@ namespace EmployeeDirectory.Services
             }
         }
 
-        public List<Employee> GetAssignedEmployees(string Id)
+        public List<Employee> GetAssignedEmployees(string Name)
         {
             try
             {
-                return (from employee in this.GetAll() where employee.JobTitle == int.Parse(Id) select employee).ToList();
+                return (from employee in this.GetAll() where employee.JobTitle == Name select employee).ToList();
             }
             catch (Exception)
             {
@@ -42,8 +43,20 @@ namespace EmployeeDirectory.Services
         {
             DataTable dataTable = this.databaseServices.GetAll<Employee>();
             List<Employee> employees = new List<Employee>();
-            foreach (Employee emp in dataTable.Rows)
+            foreach (DataRow item in dataTable.Rows)
             {
+                Employee emp = new Employee()
+                {
+                    Id = item["Id"].ToString(),
+                    Name = item["Name"].ToString(),
+                    JobTitle = item["JobTitle"].ToString(),
+                    Location = item["Location"].ToString(),
+                    Manager = item["Manager"].ToString(),
+                    Project = item["Project"].ToString(),
+                    Department = item["Department"].ToString(),
+                    Status = (EmployeeStatus)item["Status"],
+                    JoiningDate = (DateTime)item["JoiningDate"],
+                };
                 employees.Add(emp);
             }
             return employees;
@@ -94,21 +107,10 @@ namespace EmployeeDirectory.Services
         {
             List<string> propertyList = new List<string>();
             DataTable dataTable = databaseServices.GetMasterData<T>();
-            if (typeof(T) == typeof(Location))
-            {
-                foreach (Location item in dataTable.Rows)
-                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
-            }
-            else if (typeof(T) == typeof(Department))
-            {
-                foreach (Department item in dataTable.Rows)
-                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
-            }
-            else
-            {
-                foreach (JobTitle item in dataTable.Rows)
-                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
-            }
+
+            foreach (DataRow item in dataTable.Rows)
+                propertyList.Add(item["Id"].ToString() + " " + item["Name"].ToString());
+
             return propertyList;
         }
 

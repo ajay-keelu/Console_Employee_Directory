@@ -18,7 +18,7 @@ namespace EmployeeDirectory.Services
         {
             try
             {
-                return (from role in this.GetAll() where role.Id == id select role).Single();
+                return (from role in this.GetAll() where role.Id == id select role).SingleOrDefault();
             }
             catch (Exception)
             {
@@ -33,11 +33,19 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            DataTable dataTable = this.databaseServices.GetAll<Employee>();
+            DataTable dataTable = this.databaseServices.GetAll<Role>();
             List<Role> roles = new List<Role>();
-            foreach (Role emp in dataTable.Rows)
+            foreach (DataRow item in dataTable.Rows)
             {
-                roles.Add(emp);
+                Role role = new Role()
+                {
+                    Id = item["Id"].ToString(),
+                    Name = item["Role Name"].ToString(),
+                    Location = item["Location"].ToString(),
+                    Department = item["Department"].ToString(),
+                    Description = item["Description"].ToString()
+                };
+                roles.Add(role);
             }
             return roles;
         }
@@ -46,21 +54,8 @@ namespace EmployeeDirectory.Services
         {
             List<string> propertyList = new List<string>();
             DataTable dataTable = databaseServices.GetMasterData<T>();
-            if (typeof(T) == typeof(Location))
-            {
-                foreach (Location item in dataTable.Rows)
-                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
-            }
-            else if (typeof(T) == typeof(Department))
-            {
-                foreach (Department item in dataTable.Rows)
-                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
-            }
-            else
-            {
-                foreach (JobTitle item in dataTable.Rows)
-                    propertyList.Add(item.Id.ToString() + " " + item.Name.ToString());
-            }
+            foreach (DataRow item in dataTable.Rows)
+                propertyList.Add(item["Id"].ToString() + " " + item["Name"].ToString());
             return propertyList;
         }
 

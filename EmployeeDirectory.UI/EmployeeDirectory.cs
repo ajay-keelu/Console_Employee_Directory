@@ -1,7 +1,5 @@
 using EmployeeDirectory.Contracts;
 using EmployeeDirectory.Concerns;
-using EmployeeDirectory.Services;
-using System.Drawing;
 
 namespace EmployeeDirectory.UI
 {
@@ -75,12 +73,12 @@ namespace EmployeeDirectory.UI
                     // Email = Utility.GetInputEmail(),
                     // MobileNumber = Utility.GetMobileNumber(),
                     JobTitle = this.AssignRoleToEmployee(),
-                    JoiningDate = Utility.GetInputDate("Joining date", true),
                     Location = this.PropertyAssign("location"),
                     Department = this.PropertyAssign("department"),
                     // DateOfBirth = Utility.GetInputDate("Date of birth", false),
                     Manager = Utility.GetInputString("Manager ", false, null),
                     Project = Utility.GetInputString("Project ", false, null),
+                    JoiningDate = Utility.GetInputDate("Joining date", true),
                 };
 
                 if (this.EmployeeService.Create(employee))
@@ -134,6 +132,7 @@ namespace EmployeeDirectory.UI
         {
             string res = "";
             List<string> list;
+            int option;
             try
             {
                 Console.WriteLine("Select {0} :", prop);
@@ -144,15 +143,14 @@ namespace EmployeeDirectory.UI
 
                 ConsoleUtility.Print(list);
 
-                int option;
                 Utility.GetOption(out option, list.Count);
                 res = list.ElementAt(option - 1);
             }
             catch (System.Exception)
             {
-                res = this.PropertyAssign(prop);
+                option = int.Parse(this.PropertyAssign(prop));
             }
-            return res;
+            return option.ToString();
         }
 
         private void UpdateEmployee(int option, Employee employee)
@@ -311,7 +309,7 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in Employees)
             {
-                ConsoleUtility.PrintEmployeeRow(employee, this.RoleService.GetById(employee.JobTitle!)!.Name!);
+                ConsoleUtility.PrintEmployeeRow(employee);
                 ConsoleUtility.PrintLine();
             }
         }
@@ -326,7 +324,7 @@ namespace EmployeeDirectory.UI
             foreach (Employee employee in employees)
             {
                 Role? role = this.RoleService.GetById(employee.JobTitle!);
-                ConsoleUtility.PrintEmployeeRow(employee, role!.Name!);
+                ConsoleUtility.PrintEmployeeRow(employee);//, role!.Name!);
                 ConsoleUtility.PrintLine();
             }
         }

@@ -6,83 +6,82 @@ namespace EmployeeDirectory.Database
 {
     public class DbConnection : IDbConnectionLocal
     {
-        string _connectionString = "DATA SOURCE=sql-dev;INITIAL CATALOG=ajayEmployeeDirectory;INTEGRATED SECURITY=SSPI;";
+        string _connectionString = "data source=sql-dev;initial catalog=ajayEmployeeDirectory;integrated security=SSPI;";
         SqlConnection _sqlConnection;
         SqlCommand sqlCommand;
 
         public DbConnection()
         {
-            using (_sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlCommand = new SqlCommand();
-                sqlCommand.Connection = _sqlConnection;
-            }
+            _sqlConnection = new SqlConnection(_connectionString);
+            sqlCommand = new SqlCommand();
         }
 
         public DataTable GetAll<T>()
         {
             DataTable dataTable = new DataTable();
+            _sqlConnection.Open();
+            sqlCommand.Connection = _sqlConnection;
             if (typeof(T) == typeof(Employee))
             {
-                _sqlConnection.Open();
-                sqlCommand.CommandText = "SELECT e.Id, e.Name, loc.Name 'Location', dept.Name 'Department', emp.Name 'Manager', proj.Name 'Project', s.Name 'Status', e.JoiningDate 'Joining Date' FROM  Employee e JOIN Location loc ON e.Location = loc.Id JOIN Department dept ON dept.Id = e.Department JOIN Status s ON e.Status = s.Id LEFT JOIN EmployeeMappedProject emproj ON e.Id = emproj.EmpId LEFT JOIN Employee emp ON emp.Id = e.Manager LEFT JOIN Project proj ON proj.Id = emproj.ProjectId WHERE e.Status <> '2';";
+                sqlCommand.CommandText = "SELECT e.Id, e.Name 'Name', loc.Name 'Location', dept.Name 'Department',jt.Name 'JobTitle', emp.Name 'Manager', proj.Name 'Project', e.Status 'Status', e.JoiningDate 'JoiningDate' FROM  Employee e JOIN Location loc ON e.Location = loc.Id JOIN Department dept ON dept.Id = e.Department JOIN Role r ON e.Role = r.Id JOIN JobTitle jt ON r.Name = jt.Id LEFT JOIN EmployeeMappedProject emproj ON e.Id = emproj.EmpId LEFT JOIN Employee emp ON emp.Id = e.Manager LEFT JOIN Project proj ON proj.Id = emproj.ProjectId WHERE e.Status <> '2';";
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 dataTable.Load(sqlDataReader);
-                _sqlConnection.Close();
             }
             else
             {
-                _sqlConnection.Open();
-                sqlCommand.CommandText = "SELECT r.Id, 'Role Name', loc.Name 'Location', dept.Name 'Department', r.Description 'Description' FROM Role r JOIN Location loc ON r.Location  = loc.Id JOIN Department dept ON r.Department = dept.Id";
+                sqlCommand.CommandText = "SELECT r.Id, jt.Name 'Role Name', loc.Name 'Location', dept.Name 'Department', r.Description 'Description' FROM Role r JOIN Location loc ON r.Location  = loc.Id JOIN Department dept ON r.Department = dept.Id JOIN JobTitle jt ON r.Name = jt.Id";
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 dataTable.Load(sqlDataReader);
-                _sqlConnection.Close();
             }
+            _sqlConnection.Close();
             return dataTable;
         }
 
         public DataTable GetMasterData<T>()
         {
             DataTable dataTable = new DataTable();
+            _sqlConnection.Open();
+            sqlCommand.Connection = _sqlConnection;
             if (typeof(T) == typeof(Location))
             {
-                _sqlConnection.Open();
                 sqlCommand.CommandText = "SELECT * FROM Location";
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 dataTable.Load(sqlDataReader);
-                _sqlConnection.Close();
             }
             else if (typeof(T) == typeof(Department))
             {
-                _sqlConnection.Open();
                 sqlCommand.CommandText = "SELECT * FROM Department";
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 dataTable.Load(sqlDataReader);
-                _sqlConnection.Close();
             }
             else if (typeof(T) == typeof(JobTitle))
             {
-                _sqlConnection.Open();
                 sqlCommand.CommandText = "SELECT * FROM JobTitle";
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 dataTable.Load(sqlDataReader);
-                _sqlConnection.Close();
             }
+            _sqlConnection.Close();
             return dataTable;
         }
 
         public bool ExecuteQuery(string query)
         {
+            _sqlConnection.Open();
+            sqlCommand.Connection = _sqlConnection;
             try
             {
-                _sqlConnection.Open();
+                Console.WriteLine("--- " + query);
                 sqlCommand.CommandText = query;
+                sqlCommand.ExecuteNonQuery();
                 _sqlConnection.Close();
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                Console.WriteLine(" --- -- " + e.Message);
                 return false;
             }
+            _sqlConnection.Close();
+
             return true;
         }
     }

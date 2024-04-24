@@ -38,6 +38,7 @@ namespace EmployeeDirectory.Services
                 {
                     query = $"UPDATE Role SET {property} = '{value}' WHERE Id = {Id}";
                 }
+                if (!dbConnectionLocal.ExecuteQuery(query)) return false;
             }
             catch (System.Exception)
             {
@@ -50,21 +51,20 @@ namespace EmployeeDirectory.Services
         {
             try
             {
-                string query;
-                if (typeof(T) == typeof(Employee))
-                {
-                    Employee employee = (Employee)(object)record!;
-                    query = $"INSERT INTO Employee VALUES('{employee.Name}','{employee.Location}','{employee.Department}','{employee.JobTitle}','{employee.Manager}','{employee.Status}','{employee.JoiningDate}')";
+                if (record == null) return false;
 
-                    if (!dbConnectionLocal.ExecuteQuery(query)) return false;
+                string query;
+                if (record is Employee)
+                {
+                    Employee employee = (Employee)(object)record;
+                    query = $"INSERT INTO Employee(Name,Location,Department,Role,Manager,Status,JoiningDate) VALUES('{employee.Name}',{employee.Location},{employee.Department},{employee.JobTitle},{(string.IsNullOrEmpty(employee.Manager) ? "NULL" : employee.Manager)},{(int)(EmployeeStatus)employee.Status},'{employee.JoiningDate}')";
                 }
                 else
                 {
-                    Role role = (Role)(object)record!;
-                    query = $"INSERT INTO Employee VALUES('{role.Name}','{role.Location}','{role.Department}','{role.Description}'";
-
-                    if (!dbConnectionLocal.ExecuteQuery(query)) return false;
+                    Role role = (Role)(object)record;
+                    query = $"INSERT INTO Role VALUES({role.Name},{role.Location},{role.Department},'{role.Description}')";
                 }
+                if (!dbConnectionLocal.ExecuteQuery(query)) return false;
             }
             catch (System.Exception)
             {
@@ -79,11 +79,11 @@ namespace EmployeeDirectory.Services
             {
                 if (typeof(T) == typeof(Employee))
                 {
-                    if (!dbConnectionLocal.ExecuteQuery($"DELETE FROM Employee WHERE Id = {Id}")) return false;
+                    if (!dbConnectionLocal.ExecuteQuery($"UPDATE Employee SET Status = 2 WHERE Id = {Id}")) return false;
                 }
                 else
                 {
-                    if (!dbConnectionLocal.ExecuteQuery($"DELETE FROM Role WHERE Id = {Id}")) return false;
+                    if (!dbConnectionLocal.ExecuteQuery($"UPDATE Role SET Status = 2 WHERE Id = {Id}")) return false;
                 }
             }
             catch (System.Exception)

@@ -30,7 +30,6 @@ namespace EmployeeDirectory.Concerns
 
         public Employee()
         {
-            // this.IsActive = true;
             this.Status = EmployeeStatus.Active;
         }
 
