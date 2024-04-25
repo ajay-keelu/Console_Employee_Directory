@@ -9,17 +9,20 @@ namespace EmployeeDirectory.UI
 
         public readonly IRoleService RoleService;
 
-        public RoleDirectory(IEmployeeService employeeService, IRoleService roleService)
+        public readonly IDatabaseServices DatabaseServices;
+
+        public RoleDirectory(IEmployeeService employeeService, IRoleService roleService, IDatabaseServices databaseServices)
         {
             EmployeeService = employeeService;
             RoleService = roleService;
+            DatabaseServices = databaseServices;
         }
 
         public void RoleInitialize()
         {
             try
             {
-                Console.WriteLine(Menus.RoleMenu);
+                Console.WriteLine(Menus.Role);
                 int option;
                 Utility.GetOption(out option, 5);
                 bool flag = false;
@@ -62,9 +65,9 @@ namespace EmployeeDirectory.UI
         {
             Role role = new Role()
             {
-                Name = this.GetRoleProperty<JobTitle>(),
-                Department = this.GetRoleProperty<Department>(),
-                Location = this.GetRoleProperty<Location>(),
+                Name = this.GetRoleProperty<MasterData>("JobTitle"),
+                Department = this.GetRoleProperty<MasterData>("Department"),
+                Location = this.GetRoleProperty<MasterData>("Location"),
                 Description = Utility.GetInputString("Description ", true, null),
             };
 
@@ -74,14 +77,14 @@ namespace EmployeeDirectory.UI
                 Console.WriteLine("Please try again!");
         }
 
-        private string GetRoleProperty<T>()
+        private string GetRoleProperty<T>(string name) where T : new()
         {
             string res = "";
             int option;
             try
             {
                 Console.WriteLine("Select {0} :", typeof(T).ToString().Split(".").Last().ToLower());
-                List<string> list = this.RoleService.GetProperty<T>();
+                List<string> list = this.RoleService.GetProperty<T>(name);
                 ConsoleUtility.Print(list);
                 Utility.GetOption(out option, list.Count);
                 res = list.ElementAt(option - 1);
@@ -89,7 +92,7 @@ namespace EmployeeDirectory.UI
             catch (System.Exception e)
             {
                 Console.WriteLine(e.Message);
-                option = int.Parse(this.GetRoleProperty<T>());
+                option = int.Parse(this.GetRoleProperty<T>(name));
             }
             return option.ToString();
         }
@@ -115,7 +118,7 @@ namespace EmployeeDirectory.UI
 
                     if (role == null) throw new Exception();
 
-                    Console.WriteLine(Menus.EditRoleMenu);
+                    Console.WriteLine(Menus.EditRole);
                     int option;
                     Utility.GetOption(out option, 5);
 
@@ -139,17 +142,17 @@ namespace EmployeeDirectory.UI
                 switch ((EditRoleMenu)option)
                 {
                     case EditRoleMenu.Name:
-                        role.Name = this.GetRoleProperty<JobTitle>();
+                        role.Name = this.GetRoleProperty<MasterData>("JobTitle");
                         this.RoleService.Update("Name", role.Name.ToString(), int.Parse(role.Id));
                         break;
 
                     case EditRoleMenu.Department:
-                        role.Department = this.GetRoleProperty<Department>();
+                        role.Department = this.GetRoleProperty<MasterData>("Department");
                         this.RoleService.Update("Department", role.Department.ToString(), int.Parse(role.Id));
                         break;
 
                     case EditRoleMenu.Location:
-                        role.Location = this.GetRoleProperty<Location>();
+                        role.Location = this.GetRoleProperty<MasterData>("Location");
                         this.RoleService.Update("Department", role.Location.ToString(), int.Parse(role.Id));
                         break;
 
@@ -242,8 +245,8 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in employees)
             {
-                Role? role = this.RoleService.GetById(employee.JobTitle.ToString()!);
-                ConsoleUtility.PrintEmployeeRow(employee);//, role?.Name!);
+                Role? role = this.RoleService.GetById(employee.Role);
+                ConsoleUtility.PrintEmployeeRow(employee, DatabaseServices);//, role?.Name!);
                 ConsoleUtility.PrintLine();
             }
         }

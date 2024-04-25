@@ -9,17 +9,20 @@ namespace EmployeeDirectory.UI
 
         public readonly IRoleService RoleService;
 
-        public EmployeeDirectory(IEmployeeService employeeService, IRoleService roleService)
+        public readonly IDatabaseServices DatabaseServices;
+
+        public EmployeeDirectory(IEmployeeService employeeService, IRoleService roleService, IDatabaseServices databaseServices)
         {
             EmployeeService = employeeService;
             RoleService = roleService;
+            DatabaseServices = databaseServices;
         }
 
         public void EmployeeInitalize()
         {
             try
             {
-                Console.WriteLine(Menus.EmployeeMenu);
+                Console.WriteLine(Menus.Employee);
                 int option;
                 bool flag = false;
                 Utility.GetOption(out option, 6);
@@ -72,13 +75,14 @@ namespace EmployeeDirectory.UI
                     Name = Utility.GetInputString("Fullname", true, RegularExpression.NamePattern),
                     // Email = Utility.GetInputEmail(),
                     // MobileNumber = Utility.GetMobileNumber(),
-                    JobTitle = this.AssignRoleToEmployee(),
-                    Location = this.PropertyAssign("location"),
-                    Department = this.PropertyAssign("department"),
+                    Role = this.AssignRoleToEmployee(),
+                    Location = this.PropertyAssign("Location"),
+                    Department = this.PropertyAssign("Department"),
                     // DateOfBirth = Utility.GetInputDate("Date of birth", false),
                     Manager = Utility.GetInputString("Manager ", false, null),
-                    Project = Utility.GetInputString("Project ", false, null),
+                    // Project = this.PropertyAssign("Project"),
                     JoiningDate = Utility.GetInputDate("Joining date", true),
+                    Status = "1"
                 };
 
                 if (this.EmployeeService.Create(employee))
@@ -109,7 +113,7 @@ namespace EmployeeDirectory.UI
                     if (employee == null)
                         throw new Exception();
 
-                    Console.WriteLine(Menus.EditEmployeeMenu);
+                    Console.WriteLine(Menus.EditEmployee);
                     int option;
                     Utility.GetOption(out option, 10);
 
@@ -137,9 +141,9 @@ namespace EmployeeDirectory.UI
             {
                 Console.WriteLine("Select {0} :", prop);
                 if (prop.Equals("location"))
-                    list = this.EmployeeService.GetProperty<Location>();
+                    list = this.EmployeeService.GetProperty<MasterData>("Location");
                 else
-                    list = this.EmployeeService.GetProperty<Department>();
+                    list = this.EmployeeService.GetProperty<MasterData>("Department");
 
                 ConsoleUtility.Print(list);
 
@@ -180,8 +184,8 @@ namespace EmployeeDirectory.UI
                         break;
 
                     case EditEmployeeMenu.Jobtitle:
-                        employee.JobTitle = this.AssignRoleToEmployee();
-                        EmployeeService.Update("Role", employee.JobTitle, int.Parse(employee.Id));
+                        employee.Role = this.AssignRoleToEmployee();
+                        EmployeeService.Update("Role", employee.Role, int.Parse(employee.Id));
                         break;
 
                     // case EditEmployeeMenu.DateOfBirth:
@@ -309,7 +313,7 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in Employees)
             {
-                ConsoleUtility.PrintEmployeeRow(employee);
+                ConsoleUtility.PrintEmployeeRow(employee, DatabaseServices);
                 ConsoleUtility.PrintLine();
             }
         }
@@ -323,8 +327,8 @@ namespace EmployeeDirectory.UI
 
             foreach (Employee employee in employees)
             {
-                Role? role = this.RoleService.GetById(employee.JobTitle!);
-                ConsoleUtility.PrintEmployeeRow(employee);//, role!.Name!);
+                Role? role = this.RoleService.GetById(employee.Role);
+                ConsoleUtility.PrintEmployeeRow(employee, DatabaseServices);//, role!.Name!);
                 ConsoleUtility.PrintLine();
             }
         }

@@ -13,16 +13,40 @@ namespace EmployeeDirectory.Services
             this.dbConnectionLocal = dbConnectionLocal;
         }
 
-        public DataTable GetAll<T>()
+        public List<T> GetAll<T>(string tableName) where T : new()
         {
-            DataTable dataTable = dbConnectionLocal.GetAll<T>();
-            return dataTable;
+            return dbConnectionLocal.GetAll<T>(tableName);
         }
 
-        public DataTable GetMasterData<T>()
+        public bool Create<T>(T record)
         {
-            DataTable dataTable = dbConnectionLocal.GetMasterData<T>();
-            return dataTable;
+            try
+            {
+                if (record == null) return false;
+
+                string query;
+                if (record is Employee)
+                {
+                    Employee employee = (Employee)(object)record;
+                    query = $"INSERT INTO Employee(Name,Location,Department,Role,Manager,Status,JoiningDate) VALUES('{employee.Name}',{employee.Location},{employee.Department},{employee.Role},{(string.IsNullOrEmpty(employee.Manager) ? "NULL" : employee.Manager)},{employee.Status},'{employee.JoiningDate}')";
+                }
+                else
+                {
+                    Role role = (Role)(object)record;
+                    query = $"INSERT INTO Role VALUES({role.Name},{role.Location},{role.Department},'{role.Description}')";
+                }
+                if (!dbConnectionLocal.ExecuteQuery(query)) return false;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public string GetName(string id, string tableName)
+        {
+            return dbConnectionLocal.GetQueryResults($"SELECT Name FROM {tableName} WHERE Id ={id}");
         }
 
         public bool Update<T>(string property, string value, int Id)
@@ -37,32 +61,6 @@ namespace EmployeeDirectory.Services
                 else
                 {
                     query = $"UPDATE Role SET {property} = '{value}' WHERE Id = {Id}";
-                }
-                if (!dbConnectionLocal.ExecuteQuery(query)) return false;
-            }
-            catch (System.Exception)
-            {
-
-                return false;
-            }
-            return true;
-        }
-        public bool Create<T>(T record)
-        {
-            try
-            {
-                if (record == null) return false;
-
-                string query;
-                if (record is Employee)
-                {
-                    Employee employee = (Employee)(object)record;
-                    query = $"INSERT INTO Employee(Name,Location,Department,Role,Manager,Status,JoiningDate) VALUES('{employee.Name}',{employee.Location},{employee.Department},{employee.JobTitle},{(string.IsNullOrEmpty(employee.Manager) ? "NULL" : employee.Manager)},{(int)(EmployeeStatus)employee.Status},'{employee.JoiningDate}')";
-                }
-                else
-                {
-                    Role role = (Role)(object)record;
-                    query = $"INSERT INTO Role VALUES({role.Name},{role.Location},{role.Department},'{role.Description}')";
                 }
                 if (!dbConnectionLocal.ExecuteQuery(query)) return false;
             }

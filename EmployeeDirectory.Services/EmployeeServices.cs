@@ -27,11 +27,11 @@ namespace EmployeeDirectory.Services
             }
         }
 
-        public List<Employee> GetAssignedEmployees(string Name)
+        public List<Employee> GetAssignedEmployees(string id)
         {
             try
             {
-                return (from employee in this.GetAll() where employee.JobTitle == Name select employee).ToList();
+                return (from employee in this.GetAll() where employee.Role == id select employee).ToList();
             }
             catch (Exception)
             {
@@ -41,25 +41,7 @@ namespace EmployeeDirectory.Services
 
         public List<Employee> GetAll()
         {
-            DataTable dataTable = this.databaseServices.GetAll<Employee>();
-            List<Employee> employees = new List<Employee>();
-            foreach (DataRow item in dataTable.Rows)
-            {
-                Employee emp = new Employee()
-                {
-                    Id = item["Id"].ToString(),
-                    Name = item["Name"].ToString(),
-                    JobTitle = item["JobTitle"].ToString(),
-                    Location = item["Location"].ToString(),
-                    Manager = item["Manager"].ToString(),
-                    Project = item["Project"].ToString(),
-                    Department = item["Department"].ToString(),
-                    Status = (EmployeeStatus)item["Status"],
-                    JoiningDate = (DateTime)item["JoiningDate"],
-                };
-                employees.Add(emp);
-            }
-            return employees;
+            return this.databaseServices.GetAll<Employee>("Employee");
         }
 
         public bool DeleteByID(string id)
@@ -103,35 +85,21 @@ namespace EmployeeDirectory.Services
             return true;
         }
 
-        public List<string> GetProperty<T>()
+        public List<string> GetProperty<T>(string name) where T : new()
         {
-            List<string> propertyList = new List<string>();
-            DataTable dataTable = databaseServices.GetMasterData<T>();
-
-            foreach (DataRow item in dataTable.Rows)
-                propertyList.Add(item["Id"].ToString() + " " + item["Name"].ToString());
-
-            return propertyList;
+            List<T> propertyList = databaseServices.GetAll<T>(name);
+            List<string> res = new List<string>();
+            if (typeof(T) == typeof(MasterData))
+            {
+                foreach (T item in propertyList)
+                {
+                    MasterData md = (MasterData)(object)item;
+                    res.Add(md.Id.ToString() + " " + md.Name.ToString());
+                }
+            }
+            return res;
         }
 
-        // public bool Update(Employee employee)
-        // {
-        //     try
-        //     {
-        //         var employees = this.GetAll();
-        //         int index = employees.FindIndex(emp => emp.Id == employee.Id);
-        //         employees[index] = employee;
-
-        //         if (!this.databaseServices.Save<Employee>(employees))
-        //             throw new Exception();
-
-        //         return true;
-        //     }
-        //     catch (Exception)
-        //     {
-        //         return false;
-        //     }
-        // }
 
         private string GenerateId()
         {

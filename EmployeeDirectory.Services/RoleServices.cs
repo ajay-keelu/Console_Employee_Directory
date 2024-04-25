@@ -33,30 +33,22 @@ namespace EmployeeDirectory.Services
 
         public List<Role> GetAll()
         {
-            DataTable dataTable = this.databaseServices.GetAll<Role>();
-            List<Role> roles = new List<Role>();
-            foreach (DataRow item in dataTable.Rows)
-            {
-                Role role = new Role()
-                {
-                    Id = item["Id"].ToString(),
-                    Name = item["Role Name"].ToString(),
-                    Location = item["Location"].ToString(),
-                    Department = item["Department"].ToString(),
-                    Description = item["Description"].ToString()
-                };
-                roles.Add(role);
-            }
-            return roles;
+            return this.databaseServices.GetAll<Role>("Role");
         }
 
-        public List<string> GetProperty<T>()
+        public List<string> GetProperty<T>(string name) where T : new()
         {
-            List<string> propertyList = new List<string>();
-            DataTable dataTable = databaseServices.GetMasterData<T>();
-            foreach (DataRow item in dataTable.Rows)
-                propertyList.Add(item["Id"].ToString() + " " + item["Name"].ToString());
-            return propertyList;
+            List<T> propertyList = databaseServices.GetAll<T>(name);
+            List<string> res = new List<string>();
+            if (typeof(T) == typeof(MasterData))
+            {
+                foreach (T item in propertyList)
+                {
+                    MasterData md = (MasterData)(object)item;
+                    res.Add(md.Id.ToString() + " " + md.Name.ToString());
+                }
+            }
+            return res;
         }
 
         public bool DeleteById(string Id)

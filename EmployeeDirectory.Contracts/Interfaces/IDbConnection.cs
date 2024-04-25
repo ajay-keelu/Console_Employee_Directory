@@ -5,9 +5,9 @@ namespace EmployeeDirectory.Contracts
 {
     public interface IDbConnectionLocal
     {
-        public DataTable GetAll<T>();
+        public List<T> GetAll<T>(string name) where T : new();
 
-        public DataTable GetMasterData<T>();
+        public string GetQueryResults(string query);
 
         public bool ExecuteQuery(string query);
     }

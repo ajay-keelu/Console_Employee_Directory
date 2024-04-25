@@ -3,6 +3,8 @@ using EmployeeDirectory.Contracts;
 using EmployeeDirectory.Services;
 using EmployeeDirectory.Concerns;
 using EmployeeDirectory.UI;
+using System.Data.SqlClient;
+
 public class Program
 {
     static ServiceProvider? serviceProvider;
@@ -21,7 +23,7 @@ public class Program
     public static void ManagementInitialize()
     {
 
-        Console.WriteLine(Menus.ManagementMenu);
+        Console.WriteLine(Menus.Management);
         int option;
         Utility.GetOption(out option, 3);
 
@@ -51,8 +53,8 @@ public class Program
                 .AddSingleton<IDbConnectionLocal, EmployeeDirectory.Database.DbConnection>()
                 .AddSingleton<IEmployeeDirectory, EmployeeDirectory.UI.EmployeeDirectory>()
                 .AddSingleton<IRoleDirectory, RoleDirectory>()
+                .AddScoped<SqlConnection>(provider => new SqlConnection())
                 .AddSingleton<IDatabaseServices, DatabaseServices>()
                 .BuildServiceProvider();
     }
-
 }

@@ -17,10 +17,10 @@ namespace EmployeeDirectory.Concerns
 
         // public bool IsActive { get; set; }
 
-        public Role()
-        {
-            // this.AssignedEmployees = new List<string>();
-            // this.IsActive = true;
-        }
+        // public Role()
+        // {
+        //     // this.AssignedEmployees = new List<string>();
+        //     // this.IsActive = true;
+        // }
     }
 }

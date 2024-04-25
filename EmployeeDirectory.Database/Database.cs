@@ -1,86 +1,94 @@
 using System.Data;
 using System.Data.SqlClient;
-using EmployeeDirectory.Concerns;
+using System.Reflection;
 using EmployeeDirectory.Contracts;
+
 namespace EmployeeDirectory.Database
 {
     public class DbConnection : IDbConnectionLocal
     {
         string _connectionString = "data source=sql-dev;initial catalog=ajayEmployeeDirectory;integrated security=SSPI;";
-        SqlConnection _sqlConnection;
-        SqlCommand sqlCommand;
+        private SqlConnection _sqlConnection;
 
-        public DbConnection()
+        public DbConnection(SqlConnection sqlConnection)
         {
-            _sqlConnection = new SqlConnection(_connectionString);
-            sqlCommand = new SqlCommand();
+            _sqlConnection = sqlConnection;
+            _sqlConnection.ConnectionString = _connectionString;
         }
 
-        public DataTable GetAll<T>()
+        public List<T> GetAll<T>(string tableName) where T : new()
         {
-            DataTable dataTable = new DataTable();
+            List<T> list = new List<T>();
             _sqlConnection.Open();
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.CommandText = $"SELECT * FROM {tableName};";
             sqlCommand.Connection = _sqlConnection;
-            if (typeof(T) == typeof(Employee))
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
             {
-                sqlCommand.CommandText = "SELECT e.Id, e.Name 'Name', loc.Name 'Location', dept.Name 'Department',jt.Name 'JobTitle', emp.Name 'Manager', proj.Name 'Project', e.Status 'Status', e.JoiningDate 'JoiningDate' FROM  Employee e JOIN Location loc ON e.Location = loc.Id JOIN Department dept ON dept.Id = e.Department JOIN Role r ON e.Role = r.Id JOIN JobTitle jt ON r.Name = jt.Id LEFT JOIN EmployeeMappedProject emproj ON e.Id = emproj.EmpId LEFT JOIN Employee emp ON emp.Id = e.Manager LEFT JOIN Project proj ON proj.Id = emproj.ProjectId WHERE e.Status <> '2';";
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            else
-            {
-                sqlCommand.CommandText = "SELECT r.Id, jt.Name 'Role Name', loc.Name 'Location', dept.Name 'Department', r.Description 'Description' FROM Role r JOIN Location loc ON r.Location  = loc.Id JOIN Department dept ON r.Department = dept.Id JOIN JobTitle jt ON r.Name = jt.Id";
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
+                T obj = new T();
+                Type type = obj.GetType();
+
+                for (int i = 0; i < sqlDataReader.FieldCount; i++)
+                {
+                    string fieldName = sqlDataReader.GetName(i);
+                    PropertyInfo prop = type.GetProperty(fieldName);
+                    if (prop != null && sqlDataReader[fieldName] != DBNull.Value)
+                    {
+                        object value = sqlDataReader[fieldName];
+                        prop.SetValue(obj, Convert.ChangeType(value, prop.PropertyType));
+                    }
+                }
+                list.Add(obj);
             }
             _sqlConnection.Close();
-            return dataTable;
+            return list;
         }
 
-        public DataTable GetMasterData<T>()
+        public string GetQueryResults(string query)
         {
-            DataTable dataTable = new DataTable();
-            _sqlConnection.Open();
-            sqlCommand.Connection = _sqlConnection;
-            if (typeof(T) == typeof(Location))
+            string res;
+            try
             {
-                sqlCommand.CommandText = "SELECT * FROM Location";
+                _sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = _sqlConnection;
+                sqlCommand.CommandText = query;
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
+                res = sqlDataReader.GetString(0);
             }
-            else if (typeof(T) == typeof(Department))
+            catch (Exception e)
             {
-                sqlCommand.CommandText = "SELECT * FROM Department";
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
+                _sqlConnection.Close();
+                Console.WriteLine("--- " + e.Message);
+                res = GetQueryResults(query);
             }
-            else if (typeof(T) == typeof(JobTitle))
+            finally
             {
-                sqlCommand.CommandText = "SELECT * FROM JobTitle";
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
+                _sqlConnection.Close();
             }
-            _sqlConnection.Close();
-            return dataTable;
+
+            return res;
         }
 
         public bool ExecuteQuery(string query)
         {
-            _sqlConnection.Open();
-            sqlCommand.Connection = _sqlConnection;
             try
             {
-                Console.WriteLine("--- " + query);
+                _sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = _sqlConnection;
                 sqlCommand.CommandText = query;
-                sqlCommand.ExecuteNonQuery();
-                _sqlConnection.Close();
+                int effectedRows = sqlCommand.ExecuteNonQuery();
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                Console.WriteLine(" --- -- " + e.Message);
                 return false;
             }
-            _sqlConnection.Close();
+            finally
+            {
+                _sqlConnection.Close();
+            }
 
             return true;
         }
